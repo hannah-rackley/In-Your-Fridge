@@ -13,6 +13,9 @@ html, body {
     justify-content: center;
     align-content: center;
 }
+.hidden {
+    display: none;
+}
 .login-main-container {
     display: flex;
     flex-direction: column;
