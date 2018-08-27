@@ -6,9 +6,28 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
-    <script src="main.js"></script>
 </head>
 <body>
-    
+    <div class="all_ingredients_container">
+        <div class="staples_container"></div>            
+                <form class="staples_form">
+                    <label>
+                        <span>Enter an ingredient item you keep as a staple</span>
+                            <input class="staples_input" placeholder="ex) bread"></input>
+                            <button class="staples_submit" type="submit">Submit item</button>
+                    </label>
+                </form>
+        </div>
+        <div class="extras_container"></div>            
+            <form class="extras_form">
+                <label>
+                    <span class="input-labels">Enter an extra ingredient that you have on hand, that isn't a staple</span>
+                        <input class="extras_input" placeholder="ex) chicken"></input>
+                        <button class="extras_submit" type="submit">Submit item</button>
+                </label>
+            </form>
+        </div>  
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
