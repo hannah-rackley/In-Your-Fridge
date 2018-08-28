@@ -5,7 +5,7 @@ closeLoginWindow.addEventListener('click', () => {
 });
 
 let postSignupInformation = (signupInformation) => {
-    let fetchPost = fetch('url', {
+    let fetchPost = fetch('/users', {
         method: 'POST',
         body: JSON.stringify(signupInformation),
         headers: {'Content-Type': 'application/json'}
