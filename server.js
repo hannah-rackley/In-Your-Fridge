@@ -1,4 +1,3 @@
 const jwt = require('jsonwebtoken');
-const {
-    SIGNATURE
- } = require('./variables')
+const variables = require('./variables');
+const SIGNATURE = variables.SIGNATURE;
