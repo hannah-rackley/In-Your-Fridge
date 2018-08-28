@@ -4,6 +4,7 @@ const pg = require('pg-promise')();
 const {SIGNATURE, name } = require('./variables');
 const dbConfig = `postgres://${name}@localhost:5432/fridge`;
 const db = pg(dbConfig);
+const fs = require('fs');
 
 //Create token
 let createToken = user => {
@@ -67,7 +68,57 @@ let checkToken = async (req, res, next) => {
     }
 };
 
+let postUserSignupInformation = (req, res) => {
+    readBody(req, (body) => {
+        let userInformation = JSON.parse(body);
+        db.query(`INSERT INTO
+                        users (email, password)
+                        VALUES ('` + userInformation.email + `', '` + userInformation.password + `')`)
+            .then((contents) => {
+                res.end('You are now signed up!');
+            });
+    });
+};
+
+let renderHomepage = (req, res) => {
+    fs.readFile('index.html', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log(contents);
+            res.end(contents);
+        }
+    });
+};
+
+let sendCSS = (req, res) => {
+    fs.readFile('styles.css', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.end(contents);
+        }
+    });
+};
+
+let sendJavascript = (req, res) => {
+    fs.readFile('main.js', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.end(contents);
+        }
+    });
+};
+
 let server = express();
+server.get('/', renderHomepage)
+server.get('/styles.css', sendCSS)
+server.get('/main.js', sendJavascript)
 server.post('/tokens', postToken)
+server.post('/users', postUserSignupInformation)
 // server.get('/tokens')
 server.listen(3000);
