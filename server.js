@@ -7,11 +7,12 @@ const db = pg(dbConfig);
 
 //Create token
 let createToken = user => {
-    jwt.sign(
+    let token = jwt.sign(
         {userId: user.id}, 
         SIGNATURE, 
         { expiresIn: '7d'}
     );
+    return token;
 }
 
 //Read Body helper function 
@@ -30,14 +31,16 @@ let postToken = async (req, res) => {
     readBody(req, (body) => {
         let credentials = JSON.parse(body);
         let { email, password } = credentials;
-        let user = db.query(`select * from users where users.email = ${email}`);
-        if (user.password === password && user.email === email) {
-            let token = createToken(user);
-            res.send(token);
-            //later we will add in the ability to store this token in the users local storage
-        } else {
-            res.send('Uh-oh! I cannot assign a token for you!');
-        }
+        db.one(`select * from users where users.email = '${email}'`)
+            .then(user => {
+                if (user.password === password && user.email === email) {
+                    let token = createToken(user);
+                    res.end(token);
+                    //later we will add in the ability to store this token in the users local storage
+                } else {
+                    res.send('Uh-oh! I cannot assign a token for you!');
+                }
+            })
     });
 }
 
