@@ -13,6 +13,14 @@ let captureUserCredentials = (prefix) => {
     loginModalWindow.classList.add('hidden');
 };
 
+let signupAnchor = document.querySelector('.signup-anchor');
+signupAnchor.addEventListener('click', () => {
+    let signupContainer = document.querySelector('.signup-input-container');
+    let loginContainer = document.querySelector('.login-input-container');
+    signupContainer.classList.remove('hidden');
+    loginContainer.classList.add('hidden');
+});
+
 let submitSignupInformation = document.querySelector('.signup-form');
 submitSignupInformation.addEventListener('submit', (event) => {
     event.preventDefault();
