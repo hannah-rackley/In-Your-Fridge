@@ -4,19 +4,31 @@ closeLoginWindow.addEventListener('click', () => {
     loginModalWindow.classList.add('hidden');
 });
 
+let postSignupInformation = (signupInformation) => {
+    let fetchPost = fetch('url', {
+        method: 'POST',
+        body: JSON.stringify(signupInformation),
+        headers: {'Content-Type': 'application/json'}
+    });
+};
+
 let captureUserCredentials = (prefix) => {
+    let userCredentials = {};
     let userEmail = document.querySelector('.' + prefix + '-email-input');
     let userPassword = document.querySelector('.' + prefix + '-password-input');
-    console.log(userEmail.value);
-    console.log(userPassword.value);
+    userCredentials.email = userEmail.value;
+    userCredentials.password = userPassword.value;
+    console.log(userCredentials);
     let loginModalWindow = document.querySelector('.login-modal-container');
     loginModalWindow.classList.add('hidden');
+    return userCredentials;
 };
 
 let submitSignupInformation = document.querySelector('.signup-form');
 submitSignupInformation.addEventListener('submit', (event) => {
     event.preventDefault();
-    captureUserCredentials('signup');
+    let userCredentials = captureUserCredentials('signup');
+    postSignupInformation(userCredentials);
 });
 
 let submitLoginInformation = document.querySelector('.login-form');
