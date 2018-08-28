@@ -4,13 +4,23 @@ closeLoginWindow.addEventListener('click', () => {
     loginModalWindow.classList.add('hidden');
 });
 
-let submitLoginInformation = document.querySelector('.login-form');
-submitLoginInformation.addEventListener('submit', (event) => {
-    event.preventDefault();
-    let userEmail = document.querySelector('.email-input');
-    let userPassword = document.querySelector('.password-input');
+let captureUserCredentials = (prefix) => {
+    let userEmail = document.querySelector('.' + prefix + '-email-input');
+    let userPassword = document.querySelector('.' + prefix + '-password-input');
     console.log(userEmail.value);
     console.log(userPassword.value);
     let loginModalWindow = document.querySelector('.login-modal-container');
     loginModalWindow.classList.add('hidden');
+};
+
+let submitSignupInformation = document.querySelector('.signup-form');
+submitSignupInformation.addEventListener('submit', (event) => {
+    event.preventDefault();
+    captureUserCredentials('signup');
+});
+
+let submitLoginInformation = document.querySelector('.login-form');
+submitLoginInformation.addEventListener('submit', (event) => {
+    event.preventDefault();
+    captureUserCredentials('login');
 });
