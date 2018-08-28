@@ -17,15 +17,34 @@
             </button>
             <div class="login-input-container">
                 <form class="login-form">
+                    <h3 class="login-header">
+                        Log in to view your fridge!
+                    </h3>
                     <label class="login-email">
                         Email
-                        <input type="email" class="email-input" value="" required />
+                        <input type="email" class="login-email-input" value="" required />
                     </label>
                     <label class="login-password">
                         Password
-                        <input type="password" class="password-input" required />
+                        <input type="password" class="login-password-input" required />
                     </label>
                     <button type="submit" class="login-submit-button">Log In</button>
+                </form>
+            </div>
+            <h3 class="signup-header">
+                    Are you new to in your fridge? <span class="signup-anchor">Sign up and create an account!</span>
+            </h3>
+            <div class="signup-input-container hidden">
+                <form class="signup-form">
+                    <label class="signup-email">
+                        Email
+                        <input type="email" class="signup-email-input" value="" required />
+                    </label>
+                    <label class="signup-password">
+                        Password
+                        <input type="password" class="signup-password-input" required />
+                    </label>
+                    <button type="submit" class="signup-submit-button">Sign Up</button>
                 </form>
             </div>
         </div>
@@ -54,5 +73,6 @@
         </div>  
     </div>
     <script src="main.js"></script>
+    <script src="server.js"></script>
 </body>
 </html>

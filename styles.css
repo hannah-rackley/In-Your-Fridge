@@ -53,12 +53,28 @@ html, body {
 
 .staples-form {
     display: flex;
-    align-items: flex-end;
-    align-content: right;
     justify-content: flex-end;
     flex-direction: column;
 }
 
 .logo {
     font-family: 'Exo', sans-serif;
+.signup-anchor {
+    cursor: pointer;
+}
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+.signup-email {
+    margin: 0.3em;
+}
+.signup-password {
+    margin: 0.3em;
+}
+.signup-submit-button {
+    background-color: white;
+    width: 10em;
+    margin: 0.3em;
+    align-self: center;
 }
