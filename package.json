@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/hglasser/In-Your-Fridge#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0"
   }
 }
