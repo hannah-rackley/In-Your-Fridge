@@ -14,3 +14,19 @@ submitLoginInformation.addEventListener('submit', (event) => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     loginModalWindow.classList.add('hidden');
 });
+
+let staplesBtn = document
+  .querySelector(".staples-submit")
+  .addEventListener("click", function(e) {
+    e.preventDefault();
+    let staplesInput = document.querySelector(".staples_input");
+    displayStaple(staplesInput.value);
+  });
+
+
+let displayStaple = function(input) {
+    let staplesOutput = document.querySelector(".staples_output");
+    let stapleItem = document.createElement('div')
+    stapleItem.classList.add('.staple-item-output');
+    staplesOutput.appendChild(stapleItem);
+}

@@ -6,8 +6,10 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 <body>
+    <h1 class="logo"> in your fridge </h1>
     <div class="login-modal-container">
         <div class="login-main-container">
             <button type="button" class="close-login-modal-button">
@@ -28,22 +30,25 @@
             </div>
         </div>
     </div>
-    <div class="all_ingredients_container">
-        <div class="staples_container"></div>            
-                <form class="staples_form">
+    <div class="staples-output">
+        
+    </div>
+    <div class="all-ingredients-container">
+        <div class="ingredient-container"></div>            
+                <form class="staples-form">
                     <label>
                         <span>Enter an ingredient item you keep as a staple</span>
-                            <input class="staples_input" placeholder="ex) bread"/>
-                            <button class="staples_submit" type="submit">Submit item</button>
+                            <input class="staples-input" placeholder="ex) bread"/>
+                            <button class="staples-submit" type="submit">Submit item</button>
                     </label>
                 </form>
         </div>
-        <div class="extras_container"></div>            
-            <form class="extras_form">
+        <div class="ingredient-container"></div>            
+            <form class="extras-form">
                 <label>
                     <span class="input-labels">Enter an extra ingredient that you have on hand, that isn't a staple</span>
-                        <input class="extras_input" placeholder="ex) chicken"/>
-                        <button class="extras_submit" type="submit">Submit item</button>
+                        <input class="extras-input" placeholder="ex) chicken"/>
+                        <button class="extras-submit" type="submit">Submit item</button>
                 </label>
             </form>
         </div>  
