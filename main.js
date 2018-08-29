@@ -1,15 +1,18 @@
-let token = null;
+let token;
 
 let getToken = () => {
-    token = localStorage.getItem("token");
-    if (token !== null) {
+    let checkToken = localStorage.getItem("token");
+    if (checkToken !== null) {
         let loginModalWindow = document.querySelector('.login-modal-container');
         loginModalWindow.classList.add('hidden');
-        return token;
+        return checkToken;
     } else {
         return null;
     }
 }
+
+token = getToken();
+
 
 let closeLoginWindow = document.querySelector('.close-login-modal-button');
 closeLoginWindow.addEventListener('click', () => {
