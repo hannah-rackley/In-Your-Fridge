@@ -28,22 +28,35 @@
                     </label>
                     <button type="submit" class="login-submit-button">Log In</button>
                 </form>
+                <h3 class="signup-header">
+                        Are you new to in your fridge? <span class="signup-anchor">Sign up and create an account!</span>
+                </h3>
             </div>
-            <h3 class="signup-header">
-                    Are you new to in your fridge? <span class="signup-anchor">Sign up and create an account!</span>
-            </h3>
-            <div class="signup-input-container hidden">
-                <form class="signup-form">
-                    <label class="signup-email">
-                        Email
-                        <input type="email" class="signup-email-input" value="" required />
-                    </label>
-                    <label class="signup-password">
-                        Password
-                        <input type="password" class="signup-password-input" required />
-                    </label>
-                    <button type="submit" class="signup-submit-button">Sign Up</button>
-                </form>
+            <div class="signup-modal-container hidden">
+                <div class="signup-form-container">
+                    <form class="signup-form">
+                        <h3 class="create-account-header">
+                            Create an account below
+                        </h3>
+                        <label class="signup-email">
+                            Email
+                            <input type="email" class="signup-email-input" value="" required />
+                        </label>
+                        <label class="signup-password">
+                            Password
+                            <input type="password" class="signup-password-input" required />
+                        </label>
+                        <button type="submit" class="signup-submit-button">Sign Up</button>
+                    </form>
+                </div>
+                <div class="back-to-login-window-container">
+                    <h3 class="back-to-login-header">
+                        <span>Already have an account?</span>
+                        <br>
+                        <span>Click the log in button below</span>
+                    </h3>
+                    <button type="click" class="back-to-login-button">Log In</button>
+                </div>
             </div>
         </div>
     </div>
