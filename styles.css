@@ -25,6 +25,7 @@ html, body {
     align-self: flex-end;
     background-color: white;
     margin: 0.4em;
+    margin-bottom: 0;
 }
 .login-form {
     display: flex;
@@ -54,22 +55,30 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+.create-account-header {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
 .signup-email {
-    margin: 0.3em;
+    margin: 0.5em;
 }
 .signup-password {
-    margin: 0.3em;
+    margin: 0.5em;
 }
 .signup-submit-button {
     background-color: white;
     width: 10em;
-    margin: 0.3em;
+    margin: 0.5em;
     align-self: center;
 }
 .back-to-login-window-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.back-to-login-header {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 .back-to-login-button {
     width: 10em;
