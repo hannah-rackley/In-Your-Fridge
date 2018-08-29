@@ -41,6 +41,22 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
+let staplesBtn = document
+  .querySelector(".staples-submit")
+  .addEventListener("click", function(e) {
+    e.preventDefault();
+    let staplesInput = document.querySelector(".staples_input");
+    displayStaple(staplesInput.value);
+  });
+
+
+let displayStaple = function(input) {
+    let staplesOutput = document.querySelector(".staples_output");
+    let stapleItem = document.createElement('div')
+    stapleItem.classList.add('.staple-item-output');
+    staplesOutput.appendChild(stapleItem);
+}
+
 let signupAnchor = document.querySelector('.signup-anchor');
 signupAnchor.addEventListener('click', () => {
     let signupContainer = document.querySelector('.signup-input-container');
@@ -59,6 +75,9 @@ submitSignupInformation.addEventListener('submit', (event) => {
 let submitLoginInformation = document.querySelector('.login-form');
 submitLoginInformation.addEventListener('submit', (event) => {
     event.preventDefault();
+    captureUserCredentials('login');
+});
+
     let credentials = captureUserCredentials('login');
     fetch('/tokens', {
         method: 'POST',
@@ -70,3 +89,4 @@ submitLoginInformation.addEventListener('submit', (event) => {
             localStorage.setItem("token", JSON.stringify(text))
         });
 });
+
