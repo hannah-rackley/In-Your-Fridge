@@ -46,15 +46,13 @@ let postToken = async (req, res) => {
 }
 
 // GET /.inyourfridge/private
-let privatePage = (req, res) => {
-    res.send(`Hello, user #${req.jwt.userId}`);
-};
-  
 let checkToken = async (req, res, next) => {
+    console.log('headers:' + JSON.stringify(req.headers));
     let { authorization: token } = req.headers;
     let payload;
     try {
         payload = jwt.verify(token, SIGNATURE);
+        console.log(payload);
     } catch(err) {
         console.log(err);
     }

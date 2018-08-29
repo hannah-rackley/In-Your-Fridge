@@ -1,3 +1,16 @@
+let token = null;
+
+let getToken = () => {
+    token = localStorage.getItem("token");
+    if (token !== null) {
+        let loginModalWindow = document.querySelector('.login-modal-container');
+        loginModalWindow.classList.add('hidden');
+        return token;
+    } else {
+        return null;
+    }
+}
+
 let closeLoginWindow = document.querySelector('.close-login-modal-button');
 closeLoginWindow.addEventListener('click', () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
@@ -54,14 +67,3 @@ submitLoginInformation.addEventListener('submit', (event) => {
             localStorage.setItem("token", JSON.stringify(text))
         });
 });
-
-let getToken = () => {
-    let token = localStorage.getItem("token");
-    if (token !== null) {
-        let loginModalWindow = document.querySelector('.login-modal-container');
-        loginModalWindow.classList.add('hidden');
-        return token;
-    } 
-}
-
-getToken();
