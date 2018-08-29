@@ -1,3 +1,19 @@
+let token;
+
+let getToken = () => {
+    let checkToken = localStorage.getItem("token");
+    if (checkToken !== null) {
+        let loginModalWindow = document.querySelector('.login-modal-container');
+        loginModalWindow.classList.add('hidden');
+        return checkToken;
+    } else {
+        return null;
+    }
+}
+
+token = getToken();
+
+
 let closeLoginWindow = document.querySelector('.close-login-modal-button');
 closeLoginWindow.addEventListener('click', () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
@@ -43,5 +59,14 @@ submitSignupInformation.addEventListener('submit', (event) => {
 let submitLoginInformation = document.querySelector('.login-form');
 submitLoginInformation.addEventListener('submit', (event) => {
     event.preventDefault();
-    captureUserCredentials('login');
+    let credentials = captureUserCredentials('login');
+    fetch('/tokens', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {'Content-Type': 'application/json'}
+    }).then(results => {
+        return results.text()})
+        .then(text => {
+            localStorage.setItem("token", JSON.stringify(text))
+        });
 });
