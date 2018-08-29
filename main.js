@@ -59,7 +59,7 @@ let displayStaple = function(input) {
 
 let signupAnchor = document.querySelector('.signup-anchor');
 signupAnchor.addEventListener('click', () => {
-    let signupContainer = document.querySelector('.signup-input-container');
+    let signupContainer = document.querySelector('.signup-modal-container');
     let loginContainer = document.querySelector('.login-input-container');
     signupContainer.classList.remove('hidden');
     loginContainer.classList.add('hidden');
@@ -88,5 +88,15 @@ submitLoginInformation.addEventListener('submit', (event) => {
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
         });
+});
+
+
+let backToLoginButton = document.querySelector('.back-to-login-button');
+backToLoginButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    let signupContainer = document.querySelector('.signup-modal-container');
+    let loginContainer = document.querySelector('.login-input-container');
+    signupContainer.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
 });
 
