@@ -75,9 +75,6 @@ submitSignupInformation.addEventListener('submit', (event) => {
 let submitLoginInformation = document.querySelector('.login-form');
 submitLoginInformation.addEventListener('submit', (event) => {
     event.preventDefault();
-    captureUserCredentials('login');
-});
-
     let credentials = captureUserCredentials('login');
     fetch('/tokens', {
         method: 'POST',
