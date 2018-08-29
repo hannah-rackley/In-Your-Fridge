@@ -74,7 +74,8 @@ let postUserSignupInformation = (req, res) => {
                         VALUES ('` + userInformation.email + `', '` + userInformation.password + `')`)
             .then((contents) => {
                 res.end('You are now signed up!');
-            });
+            })
+            .catch((err) => {console.log(err)});
     });
 };
 
