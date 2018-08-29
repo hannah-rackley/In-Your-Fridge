@@ -36,7 +36,7 @@ let postToken = async (req, res) => {
             .then(user => {
                 if (user.password === password && user.email === email) {
                     let token = createToken(user);
-                    res.end(token);
+                    res.send(token);
                     //later we will add in the ability to store this token in the users local storage
                 } else {
                     res.send('Uh-oh! I cannot assign a token for you!');
@@ -46,15 +46,13 @@ let postToken = async (req, res) => {
 }
 
 // GET /.inyourfridge/private
-let privatePage = (req, res) => {
-    res.send(`Hello, user #${req.jwt.userId}`);
-};
-  
 let checkToken = async (req, res, next) => {
+    console.log('headers:' + JSON.stringify(req.headers));
     let { authorization: token } = req.headers;
     let payload;
     try {
         payload = jwt.verify(token, SIGNATURE);
+        console.log(payload);
     } catch(err) {
         console.log(err);
     }
@@ -86,7 +84,7 @@ let renderHomepage = (req, res) => {
             console.log(error);
         }
         else {
-            console.log(contents);
+            // console.log(contents);
             res.end(contents);
         }
     });
