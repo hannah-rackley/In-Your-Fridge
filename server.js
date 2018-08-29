@@ -42,6 +42,7 @@ let postToken = async (req, res) => {
                     res.send('Uh-oh! I cannot assign a token for you!');
                 }
             })
+            .catch((err) => {console.log(err)});
     });
 }
 
