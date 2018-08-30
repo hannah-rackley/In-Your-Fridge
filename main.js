@@ -1,3 +1,5 @@
+import {recipeKey} from "variables";
+
 let token;
 
 let closeLogin = () => {
@@ -145,7 +147,18 @@ let submitSignupInfo = (event) => {
 let submitLoginInfo = (event) => {
     event.preventDefault();
     captureUserCredentials('login');
-});
+    let credentials = captureUserCredentials('login');
+    fetch('/tokens', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {'Content-Type': 'application/json'}
+    }).then(results => {
+        return results.text()})
+        .then(text => {
+            localStorage.setItem("token", JSON.stringify(text))
+            loginButtonStatus();
+        });
+};
 
 let getRecipesfromIngreds = (foodArr) => {
     let prefixUrl =
@@ -202,19 +215,6 @@ let getRecipeInfo = function(recipeArrIds) {
 }
 
 console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
-
-    let credentials = captureUserCredentials('login');
-    fetch('/tokens', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-        headers: {'Content-Type': 'application/json'}
-    }).then(results => {
-        return results.text()})
-        .then(text => {
-            localStorage.setItem("token", JSON.stringify(text))
-            loginButtonStatus();
-        });
-};
 
 let backToLogin = (event) => {
     event.preventDefault();
