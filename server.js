@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const express = require('express');
 const pg = require('pg-promise')();
 const {SIGNATURE, name } = require('./variables');
-const dbConfig = `postgres://${name}@localhost:5432/fridge`;
+const dbConfig = name;
 const db = pg(dbConfig);
 const fs = require('fs');
 
@@ -42,6 +42,7 @@ let postToken = async (req, res) => {
                     res.send('Uh-oh! I cannot assign a token for you!');
                 }
             })
+            .catch((err) => {console.log(err)});
     });
 }
 
@@ -74,7 +75,8 @@ let postUserSignupInformation = (req, res) => {
                         VALUES ('` + userInformation.email + `', '` + userInformation.password + `')`)
             .then((contents) => {
                 res.end('You are now signed up!');
-            });
+            })
+            .catch((err) => {console.log(err)});
     });
 };
 

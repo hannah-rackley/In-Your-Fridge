@@ -41,8 +41,6 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
-<<<<<<< HEAD
-=======
 let staplesBtn = document
   .querySelector(".staples-submit")
   .addEventListener("click", function(e) {
@@ -59,10 +57,9 @@ let displayStaple = function(input) {
     staplesOutput.appendChild(stapleItem);
 }
 
->>>>>>> 91de2215965dd4029356560fa732f7e0080c9ee2
 let signupAnchor = document.querySelector('.signup-anchor');
 signupAnchor.addEventListener('click', () => {
-    let signupContainer = document.querySelector('.signup-input-container');
+    let signupContainer = document.querySelector('.signup-modal-container');
     let loginContainer = document.querySelector('.login-input-container');
     signupContainer.classList.remove('hidden');
     loginContainer.classList.add('hidden');
@@ -147,5 +144,15 @@ console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
         });
+});
+
+
+let backToLoginButton = document.querySelector('.back-to-login-button');
+backToLoginButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    let signupContainer = document.querySelector('.signup-modal-container');
+    let loginContainer = document.querySelector('.login-input-container');
+    signupContainer.classList.add('hidden');
+    loginContainer.classList.remove('hidden');
 });
 
