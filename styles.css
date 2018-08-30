@@ -7,7 +7,8 @@ html, body {
     height: 100%;
     padding: 0;
     margin: 0;
-    background-color: red;
+    background-color: rgb(132, 129, 192);
+    font-family: Roboto, sans-serif;
 }
 .login-modal-container {
     display: flex;
@@ -27,7 +28,8 @@ html, body {
 .login-main-container {
     display: flex;
     flex-direction: column;
-    background-color: green;
+    background-color: rgb(209, 235, 241);
+    align-items: center;
 }
 .close-login-modal-button {
     align-self: flex-end;
