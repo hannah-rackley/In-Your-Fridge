@@ -1,5 +1,13 @@
 let token;
 
+let closeLogin = () => {
+    let closeLoginWindow = document.querySelector('.close-login-modal-button');
+    closeLoginWindow.addEventListener('click', () => {
+        let loginModalWindow = document.querySelector('.login-modal-container');
+        loginModalWindow.classList.add('hidden');
+    });
+}
+
 let getToken = () => {
     let checkToken = localStorage.getItem("token");
     if (checkToken !== null) {
@@ -11,13 +19,6 @@ let getToken = () => {
 }
 
 token = getToken();
-
-let closeLogin = () => {
-    let closeLoginWindow = document.querySelector('.close-login-modal-button');
-    closeLoginWindow.addEventListener('click', () => {
-        let loginModalWindow = document.querySelector('.login-modal-container');
-        loginModalWindow.classList.add('hidden');
-};
                                       
 let loginButtonStatus = () => {
     let checkToken = localStorage.getItem("token");
@@ -31,6 +32,18 @@ let loginButtonStatus = () => {
 };
 
 loginButtonStatus();
+
+let loginLogout = () => {
+    let loginModalWindow = document.querySelector('.login-modal-container');
+    let logoutButton = document.querySelector('.logout-button');
+    if (logoutButton.textContent === 'Log Out') {
+        localStorage.removeItem("token");
+        logoutButton.textContent = 'Log In';
+    } else if (logoutButton.textContent === 'Log In') {
+        console.log('log in');
+        loginModalWindow.classList.remove('hidden');
+    }
+};
 
 let postSignupInformation = (signupInformation) => {
     console.log(signupInformation);
@@ -111,6 +124,7 @@ let getConfirmedStaples = (event) => {
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
+    console.log(stapleValues);
     postStaples(stapleValues);
     return stapleValues;
 }
@@ -130,6 +144,65 @@ let submitSignupInfo = (event) => {
 
 let submitLoginInfo = (event) => {
     event.preventDefault();
+    captureUserCredentials('login');
+});
+
+let getRecipesfromIngreds = (foodArr) => {
+    let prefixUrl =
+      "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
+    let suffixUrl = "&limitLicense=false&number=5&ranking=2"
+    let ingreRootUrl = foodArr.join("%2C");
+    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": recipeKey,
+            Accept: 'application/json'
+        }
+    })
+        .then(function (result) {
+            let promiseRecipes = result.json();
+            return promiseRecipes;
+        })
+        .then(function(recipeObjArr) {
+            // console.log(recipeObjArr);
+            let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
+            getRecipeInfo(recipeArrIds);
+            })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
+
+let getRecipeInfo = function(recipeArrIds) {
+    let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
+    let suffixUrl = '&includeNutrition=false';
+    let ingreRootUrl = recipeArrIds.join("%2C");
+    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": recipeKey,
+            Accept: 'application/json'
+        }
+    })
+        .then(function (result) {
+            let x = result.json();
+            return x;
+        })
+        .then(function(recipeObjArr) {
+            console.log(recipeObjArr);
+            let newValues = recipeObjArr.map(recipe => {
+                console.log([recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
+                console.log(newValues);
+            })
+            })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
+console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
+
     let credentials = captureUserCredentials('login');
     fetch('/tokens', {
         method: 'POST',
@@ -175,19 +248,9 @@ let setupEventListeners = () => {
 
     let confirmStaples = document.querySelector('.confirm-staples');
     confirmStaples.addEventListener('click', getConfirmedStaples)
+
+    let logoutButton = document.querySelector('.logout-button');
+    logoutButton.addEventListener('click', loginLogout);
 }
 
 setupEventListeners();
-
-let logoutButton = document.querySelector('.logout-button');
-logoutButton.addEventListener('click', () => {
-    let loginModalWindow = document.querySelector('.login-modal-container');
-    if (logoutButton.textContent === 'Log Out') {
-        localStorage.removeItem("token");
-        logoutButton.textContent = 'Log In';
-    }
-    else if (logoutButton.textContent === 'Log In') {
-        console.log('log in');
-        loginModalWindow.classList.remove('hidden');
-    }
-});
