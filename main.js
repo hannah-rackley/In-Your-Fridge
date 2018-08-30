@@ -13,6 +13,18 @@ let getToken = () => {
 
 token = getToken();
 
+let loginButtonStatus = () => {
+    let checkToken = localStorage.getItem("token");
+    let logoutButton = document.querySelector('.logout-button');
+    if (checkToken === null) {
+        logoutButton.textContent = 'Log In';
+    }
+    else if (checkToken !== null) {
+        logoutButton.textContent = 'Log Out';
+    }
+};
+
+loginButtonStatus();
 
 let closeLoginWindow = document.querySelector('.close-login-modal-button');
 closeLoginWindow.addEventListener('click', () => {
@@ -143,6 +155,7 @@ console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
         return results.text()})
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
+            loginButtonStatus();
         });
 });
 
@@ -156,3 +169,15 @@ backToLoginButton.addEventListener('click', (event) => {
     loginContainer.classList.remove('hidden');
 });
 
+let logoutButton = document.querySelector('.logout-button');
+logoutButton.addEventListener('click', () => {
+    let loginModalWindow = document.querySelector('.login-modal-container');
+    if (logoutButton.textContent === 'Log Out') {
+        localStorage.removeItem("token");
+        logoutButton.textContent = 'Log In';
+    }
+    else if (logoutButton.textContent === 'Log In') {
+        console.log('log in');
+        loginModalWindow.classList.remove('hidden');
+    }
+});
