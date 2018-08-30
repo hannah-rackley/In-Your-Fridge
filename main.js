@@ -103,8 +103,8 @@ let getRecipesfromIngreds = (foodArr) => {
         }
     })
         .then(function (result) {
-            let x = result.json();
-            return x;
+            let promiseRecipes = result.json();
+            return promiseRecipes;
         })
         .then(function(recipeObjArr) {
             // console.log(recipeObjArr);
