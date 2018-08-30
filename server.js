@@ -115,10 +115,11 @@ let sendJavascript = (req, res) => {
 };
 
 let server = express();
-server.get('/', renderHomepage)
-server.get('/styles.css', sendCSS)
-server.get('/main.js', sendJavascript)
-server.post('/tokens', postToken)
-server.post('/users', postUserSignupInformation)
+server.get('/', renderHomepage);
+server.get('/styles.css', sendCSS);
+server.get('/main.js', sendJavascript);
+server.post('/tokens', postToken);
+server.post('/users', postUserSignupInformation);
+server.post('/staples', checkToken);
 // server.get('/tokens')
 server.listen(3000);
