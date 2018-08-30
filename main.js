@@ -131,27 +131,23 @@ let postStaples = (staples) => {
     });
 }
 
-let getConfirmedStaples = (event) => {
+let getConfirmedIngredients = (event) => {
     event.preventDefault();
     let stapleValues = [];
     let staples = document.querySelectorAll('.staples-item-output');
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
-    console.log(stapleValues);
     //postStaples(stapleValues);
-    return stapleValues;
-}
-
-let getConfirmedExtras = (event) => {
-    event.preventDefault();
+    console.log(stapleValues);
     let extraValues = [];
     let extras = document.querySelectorAll('.extras-item-output');
     extras.forEach(extra => {
         extraValues.push(extra.firstChild.textContent);
     });
     console.log(extraValues);
-    return extraValues;
+    console.log(stapleValues.concat(extraValues));
+    return stapleValues.concat(extraValues);
 }
 
 let showSignupContainer = () => {
@@ -269,17 +265,14 @@ let setupEventListeners = () => {
     let editStaples = document.querySelector('.edit-staples');
     editStaples.addEventListener('click', showDeleteButtons);
 
-    // let confirmStaples = document.querySelector('.confirm-staples');
-    // confirmStaples.addEventListener('click', getConfirmedStaples)
+    let confirmIngredients = document.querySelector('.confirm-ingredients');
+    confirmIngredients.addEventListener('click', getConfirmedIngredients)
 
     let extrasBtn = document.querySelector(".extras-submit");
     extrasBtn.addEventListener("click", getExtraInput);
 
     let editExtras = document.querySelector('.edit-extras');
     editExtras.addEventListener('click', showDeleteButtons);
-
-    // let confirmExtras = document.querySelector('.confirm-extras');
-    // confirmExtras.addEventListener('click', getConfirmedExtras)
 
     let logoutButton = document.querySelector('.logout-button');
     logoutButton.addEventListener('click', loginLogout);
