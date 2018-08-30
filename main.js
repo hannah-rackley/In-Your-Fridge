@@ -72,14 +72,17 @@ let displayStaple = function(input) {
     staplesOutput.appendChild(stapleItem);
 }
 
-let staplesBtn = document
-  .querySelector(".staples-submit")
-  .addEventListener("click", function(e) {
-    e.preventDefault();
+let getStapleInput = (event) => {
+    event.preventDefault();
     let staplesInput = document.querySelector(".staples-input");
     displayStaple(staplesInput.value);
     staplesInput.value = "";
-  });
+};
+
+// let getConfirmedStaples = (event) => {
+//     event.preventDefault();
+//     let staples = document.querySelectorAll('.staple-item-output');
+// }
 
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');
@@ -132,13 +135,14 @@ let setupEventListeners = () => {
     let closeLoginWindow = document.querySelector('.close-login-modal-button');
     closeLoginWindow.addEventListener('click', closeLogin);
 
+    let staplesBtn = document.querySelector(".staples-submit");
+    staplesBtn.addEventListener("click", getStapleInput);
+
     let editStaples = document.querySelector('.edit-staples');
     editStaples.addEventListener('click', showDeleteButtons);
 
-    let confirmStaples = document.querySelector('.confirm-staples');
-    confirmStaples.addEventListener('click', function(event) {
-        event.preventDefault();
-    })
+    // let confirmStaples = document.querySelector('.confirm-staples');
+    // confirmStaples.addEventListener('click', getConfirmedStaples)
 }
 
 setupEventListeners();
