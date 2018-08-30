@@ -117,15 +117,17 @@ let sendJavascript = (req, res) => {
 let postStaples = (req, res) => {
     readBody(req, (body) => {
         let stapleIngredients = JSON.parse(body);
+        let { authorization: token } = req.headers;
+        let payload = jwt.verify(token, SIGNATURE);
+        let userId = payload.userId;
         console.log(stapleIngredients);
-        db.query(`UPDATE 
-                        ingredients SET
-                            included = included WHERE
-                                userID = 
-                        VALUES ()`)
+        db.query(`INSERT INTO 
+                        ingredients (userID, included)
+                        VALUES ('` + userId + `', '{` + stapleIngredients + `}')`)
             .then((contents) => {
-
+                res.end('Your staple ingredients have beenstored!');
             })
+            .catch((err) => {console.log(err)});
     });
 };
 
