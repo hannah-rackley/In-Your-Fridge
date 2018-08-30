@@ -1,11 +1,8 @@
 let token;
 
 let closeLogin = () => {
-    let closeLoginWindow = document.querySelector('.close-login-modal-button');
-    closeLoginWindow.addEventListener('click', () => {
-        let loginModalWindow = document.querySelector('.login-modal-container');
-        loginModalWindow.classList.add('hidden');
-    });
+    let loginModalWindow = document.querySelector('.login-modal-container');
+    loginModalWindow.classList.add('hidden');
 }
 
 let getToken = () => {
@@ -68,15 +65,20 @@ let captureUserCredentials = (prefix) => {
 
 let showDeleteButtons = (event) => {
     event.preventDefault();
-    if (event.target.textContent === 'Edit Staples') {
-        event.target.textContent = 'Done Editing';
-    } else {
-        event.target.textContent = 'Edit Staples';
-    };
-    let deleteButtons = document.querySelectorAll('.delete-button');
+    let deleteButtons;
+    if (event.target.value === 'extras') {
+        deleteButtons = document.querySelectorAll('.extras-delete-button');
+    } else if (event.target.value === 'staples') {
+        deleteButtons = document.querySelectorAll('.staples-delete-button');
+    }
     deleteButtons.forEach((button) => {
         button.classList.toggle('hidden');
     });
+    if (event.target.textContent === 'Edit') {
+        event.target.textContent = 'Done!';
+    } else if (event.target.textContent === 'Done!') {
+        event.target.textContent = 'Edit';
+    }
 }
 
 let deleteStaple = (event) => {
@@ -85,30 +87,38 @@ let deleteStaple = (event) => {
     parent.parentNode.removeChild(parent);
 }
 
-let displayStaple = function(input) {
-    let staplesOutput = document.querySelector(".staples-output");
-    let stapleItem = document.createElement('div');
+let displayIngredient = function(prefix, input) {
+    let output = document.querySelector('.' + prefix + '-output');
+    let item = document.createElement('div');
     let deleteButton = document.createElement('input');
     deleteButton.setAttribute('type', 'submit');
     deleteButton.setAttribute('value', 'Remove');
-    deleteButton.classList.add('delete-button');
+    deleteButton.classList.add(prefix +'-delete-button');
     deleteButton.classList.add('hidden');
     deleteButton.addEventListener('click', deleteStaple);
-    stapleItem.textContent = input;
-    stapleItem.appendChild(deleteButton);
-    stapleItem.classList.add('staple-item-output');
-    staplesOutput.appendChild(stapleItem);
+    item.textContent = input;
+    item.appendChild(deleteButton);
+    item.classList.add(prefix + '-item-output');
+    output.appendChild(item);
 }
 
 let getStapleInput = (event) => {
     event.preventDefault();
-    let staplesInput = document.querySelector(".staples-input");
-    displayStaple(staplesInput.value);
+    let staplesInput = document.querySelector('.staples-input');
+    displayIngredient('staples', staplesInput.value);
     staplesInput.value = "";
 };
 
+let getExtraInput = (event) => {
+    event.preventDefault();
+    let extraInput = document.querySelector('.extras-input');
+    displayIngredient('extras', extraInput.value);
+    extraInput.value = "";
+};
+
 let postStaples = (staples) => {
-    let parseToken = JSON.parse(token);
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
     let fetchPost = fetch('/staples', {
         method: 'POST',
         body: JSON.stringify(staples),
@@ -117,16 +127,23 @@ let postStaples = (staples) => {
     });
 }
 
-let getConfirmedStaples = (event) => {
+let getConfirmedIngredients = (event) => {
     event.preventDefault();
     let stapleValues = [];
-    let staples = document.querySelectorAll('.staple-item-output');
+    let staples = document.querySelectorAll('.staples-item-output');
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
+    //postStaples(stapleValues);
     console.log(stapleValues);
-    postStaples(stapleValues);
-    return stapleValues;
+    let extraValues = [];
+    let extras = document.querySelectorAll('.extras-item-output');
+    extras.forEach(extra => {
+        extraValues.push(extra.firstChild.textContent);
+    });
+    console.log(extraValues);
+    console.log(stapleValues.concat(extraValues));
+    return stapleValues.concat(extraValues);
 }
 
 let showSignupContainer = () => {
@@ -158,7 +175,6 @@ let submitLoginInfo = (event) => {
         });
 };
 
-
 let backToLogin = (event) => {
     event.preventDefault();
     let signupContainer = document.querySelector('.signup-modal-container');
@@ -189,8 +205,14 @@ let setupEventListeners = () => {
     let editStaples = document.querySelector('.edit-staples');
     editStaples.addEventListener('click', showDeleteButtons);
 
-    let confirmStaples = document.querySelector('.confirm-staples');
-    confirmStaples.addEventListener('click', getConfirmedStaples)
+    let confirmIngredients = document.querySelector('.confirm-ingredients');
+    confirmIngredients.addEventListener('click', getConfirmedIngredients)
+
+    let extrasBtn = document.querySelector(".extras-submit");
+    extrasBtn.addEventListener("click", getExtraInput);
+
+    let editExtras = document.querySelector('.edit-extras');
+    editExtras.addEventListener('click', showDeleteButtons);
 
     let logoutButton = document.querySelector('.logout-button');
     logoutButton.addEventListener('click', loginLogout);
