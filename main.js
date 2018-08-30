@@ -1,4 +1,4 @@
-const { recipeKey } = require('./variables');
+// import { recipeKey } from './variable';
 
 let token;
 
@@ -70,15 +70,20 @@ let captureUserCredentials = (prefix) => {
 
 let showDeleteButtons = (event) => {
     event.preventDefault();
-    if (event.target.textContent === 'Edit Staples') {
-        event.target.textContent = 'Done Editing';
-    } else {
-        event.target.textContent = 'Edit Staples';
-    };
-    let deleteButtons = document.querySelectorAll('.delete-button');
+    let deleteButtons;
+    if (event.target.value === 'extras') {
+        deleteButtons = document.querySelectorAll('.extras-delete-button');
+    } else if (event.target.value === 'staples') {
+        deleteButtons = document.querySelectorAll('.staples-delete-button');
+    }
     deleteButtons.forEach((button) => {
         button.classList.toggle('hidden');
     });
+    if (event.target.textContent === 'Edit') {
+        event.target.textContent = 'Done!';
+    } else if (event.target.textContent === 'Done!') {
+        event.target.textContent = 'Edit';
+    }
 }
 
 let deleteStaple = (event) => {
@@ -87,26 +92,33 @@ let deleteStaple = (event) => {
     parent.parentNode.removeChild(parent);
 }
 
-let displayStaple = function(input) {
-    let staplesOutput = document.querySelector(".staples-output");
-    let stapleItem = document.createElement('div');
+let displayIngredient = function(prefix, input) {
+    let output = document.querySelector('.' + prefix + '-output');
+    let item = document.createElement('div');
     let deleteButton = document.createElement('input');
     deleteButton.setAttribute('type', 'submit');
     deleteButton.setAttribute('value', 'Remove');
-    deleteButton.classList.add('delete-button');
+    deleteButton.classList.add(prefix +'-delete-button');
     deleteButton.classList.add('hidden');
     deleteButton.addEventListener('click', deleteStaple);
-    stapleItem.textContent = input;
-    stapleItem.appendChild(deleteButton);
-    stapleItem.classList.add('staple-item-output');
-    staplesOutput.appendChild(stapleItem);
+    item.textContent = input;
+    item.appendChild(deleteButton);
+    item.classList.add(prefix + '-item-output');
+    output.appendChild(item);
 }
 
 let getStapleInput = (event) => {
     event.preventDefault();
-    let staplesInput = document.querySelector(".staples-input");
-    displayStaple(staplesInput.value);
+    let staplesInput = document.querySelector('.staples-input');
+    displayIngredient('staples', staplesInput.value);
     staplesInput.value = "";
+};
+
+let getExtraInput = (event) => {
+    event.preventDefault();
+    let extraInput = document.querySelector('.extras-input');
+    displayIngredient('extras', extraInput.value);
+    extraInput.value = "";
 };
 
 let postStaples = (staples) => {
@@ -122,13 +134,24 @@ let postStaples = (staples) => {
 let getConfirmedStaples = (event) => {
     event.preventDefault();
     let stapleValues = [];
-    let staples = document.querySelectorAll('.staple-item-output');
+    let staples = document.querySelectorAll('.staples-item-output');
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
     console.log(stapleValues);
-    postStaples(stapleValues);
+    //postStaples(stapleValues);
     return stapleValues;
+}
+
+let getConfirmedExtras = (event) => {
+    event.preventDefault();
+    let extraValues = [];
+    let extras = document.querySelectorAll('.extras-item-output');
+    extras.forEach(extra => {
+        extraValues.push(extra.firstChild.textContent);
+    });
+    console.log(extraValues);
+    return extraValues;
 }
 
 let showSignupContainer = () => {
@@ -160,61 +183,61 @@ let submitLoginInfo = (event) => {
         });
 };
 
-let getRecipesfromIngreds = (foodArr) => {
-    let prefixUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
-    let suffixUrl = "&limitLicense=false&number=5&ranking=2"
-    let ingreRootUrl = foodArr.join("%2C");
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-        method: "GET",
-        headers: {
-            "X-Mashape-Key": recipeKey,
-            Accept: 'application/json'
-        }
-    })
-        .then(function (result) {
-            let promiseRecipes = result.json();
-            return promiseRecipes;
-        })
-        .then(function(recipeObjArr) {
-            // console.log(recipeObjArr);
-            let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
-            getRecipeInfo(recipeArrIds);
-            })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
+// let getRecipesfromIngreds = (foodArr) => {
+//     let prefixUrl =
+//       "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
+//     let suffixUrl = "&limitLicense=false&number=5&ranking=2"
+//     let ingreRootUrl = foodArr.join("%2C");
+//     fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+//         method: "GET",
+//         headers: {
+//             "X-Mashape-Key": recipeKey,
+//             Accept: 'application/json'
+//         }
+//     })
+//         .then(function (result) {
+//             let promiseRecipes = result.json();
+//             return promiseRecipes;
+//         })
+//         .then(function(recipeObjArr) {
+//             // console.log(recipeObjArr);
+//             let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
+//             getRecipeInfo(recipeArrIds);
+//             })
+//         .catch(function (err) {
+//             console.log(err);
+//         });
+// }
 
 
-let getRecipeInfo = function(recipeArrIds) {
-    let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
-    let suffixUrl = '&includeNutrition=false';
-    let ingreRootUrl = recipeArrIds.join("%2C");
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-        method: "GET",
-        headers: {
-            "X-Mashape-Key": recipeKey,
-            Accept: 'application/json'
-        }
-    })
-        .then(function (result) {
-            let x = result.json();
-            return x;
-        })
-        .then(function(recipeObjArr) {
-            console.log(recipeObjArr);
-            let newValues = recipeObjArr.map(recipe => {
-                console.log([recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
-                console.log(newValues);
-            })
-            })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
+// let getRecipeInfo = function(recipeArrIds) {
+//     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
+//     let suffixUrl = '&includeNutrition=false';
+//     let ingreRootUrl = recipeArrIds.join("%2C");
+//     fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+//         method: "GET",
+//         headers: {
+//             "X-Mashape-Key": recipeKey,
+//             Accept: 'application/json'
+//         }
+//     })
+//         .then(function (result) {
+//             let x = result.json();
+//             return x;
+//         })
+//         .then(function(recipeObjArr) {
+//             console.log(recipeObjArr);
+//             let newValues = recipeObjArr.map(recipe => {
+//                 console.log([recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
+//                 console.log(newValues);
+//             })
+//             })
+//         .catch(function (err) {
+//             console.log(err);
+//         });
+// }
 
-console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
+// console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
 
 let backToLogin = (event) => {
     event.preventDefault();
@@ -246,8 +269,17 @@ let setupEventListeners = () => {
     let editStaples = document.querySelector('.edit-staples');
     editStaples.addEventListener('click', showDeleteButtons);
 
-    let confirmStaples = document.querySelector('.confirm-staples');
-    confirmStaples.addEventListener('click', getConfirmedStaples)
+    // let confirmStaples = document.querySelector('.confirm-staples');
+    // confirmStaples.addEventListener('click', getConfirmedStaples)
+
+    let extrasBtn = document.querySelector(".extras-submit");
+    extrasBtn.addEventListener("click", getExtraInput);
+
+    let editExtras = document.querySelector('.edit-extras');
+    editExtras.addEventListener('click', showDeleteButtons);
+
+    // let confirmExtras = document.querySelector('.confirm-extras');
+    // confirmExtras.addEventListener('click', getConfirmedExtras)
 
     let logoutButton = document.querySelector('.logout-button');
     logoutButton.addEventListener('click', loginLogout);
