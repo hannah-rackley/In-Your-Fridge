@@ -68,7 +68,7 @@ let displayStaple = function(input) {
     deleteButton.addEventListener('click', deleteStaple);
     stapleItem.textContent = input;
     stapleItem.appendChild(deleteButton);
-    stapleItem.classList.add('.staple-item-output');
+    stapleItem.classList.add('staple-item-output');
     staplesOutput.appendChild(stapleItem);
 }
 
@@ -79,10 +79,26 @@ let getStapleInput = (event) => {
     staplesInput.value = "";
 };
 
-// let getConfirmedStaples = (event) => {
-//     event.preventDefault();
-//     let staples = document.querySelectorAll('.staple-item-output');
-// }
+let postStaples = (staples) => {
+    let parseToken = JSON.parse(token);
+    let fetchPost = fetch('/staples', {
+        method: 'POST',
+        body: JSON.stringify(staples),
+        headers: {'Content-Type': 'application/json', 
+        'authorization': parseToken}
+    });
+}
+
+let getConfirmedStaples = (event) => {
+    event.preventDefault();
+    let stapleValues = [];
+    let staples = document.querySelectorAll('.staple-item-output');
+    staples.forEach(staple => {
+        stapleValues.push(staple.firstChild.textContent);
+    });
+    postStaples(stapleValues);
+    return stapleValues;
+}
 
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');
@@ -141,8 +157,8 @@ let setupEventListeners = () => {
     let editStaples = document.querySelector('.edit-staples');
     editStaples.addEventListener('click', showDeleteButtons);
 
-    // let confirmStaples = document.querySelector('.confirm-staples');
-    // confirmStaples.addEventListener('click', getConfirmedStaples)
+    let confirmStaples = document.querySelector('.confirm-staples');
+    confirmStaples.addEventListener('click', getConfirmedStaples)
 }
 
 setupEventListeners();
