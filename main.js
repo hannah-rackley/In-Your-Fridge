@@ -17,7 +17,8 @@ let closeLogin = () => {
     closeLoginWindow.addEventListener('click', () => {
         let loginModalWindow = document.querySelector('.login-modal-container');
         loginModalWindow.classList.add('hidden');
-};
+    });
+}
                                       
 let loginButtonStatus = () => {
     let checkToken = localStorage.getItem("token");
@@ -31,6 +32,17 @@ let loginButtonStatus = () => {
 };
 
 loginButtonStatus();
+
+let loginLogout = () => {
+    let loginModalWindow = document.querySelector('.login-modal-container');
+    if (logoutButton.textContent === 'Log Out') {
+        localStorage.removeItem("token");
+        logoutButton.textContent = 'Log In';
+    } else if (logoutButton.textContent === 'Log In') {
+        console.log('log in');
+        loginModalWindow.classList.remove('hidden');
+    }
+};
 
 let postSignupInformation = (signupInformation) => {
     console.log(signupInformation);
@@ -175,19 +187,9 @@ let setupEventListeners = () => {
 
     let confirmStaples = document.querySelector('.confirm-staples');
     confirmStaples.addEventListener('click', getConfirmedStaples)
+
+    let logoutButton = document.querySelector('.logout-button');
+    logoutButton.addEventListener('click', loginLogout);
 }
 
 setupEventListeners();
-
-let logoutButton = document.querySelector('.logout-button');
-logoutButton.addEventListener('click', () => {
-    let loginModalWindow = document.querySelector('.login-modal-container');
-    if (logoutButton.textContent === 'Log Out') {
-        localStorage.removeItem("token");
-        logoutButton.textContent = 'Log In';
-    }
-    else if (logoutButton.textContent === 'Log In') {
-        console.log('log in');
-        loginModalWindow.classList.remove('hidden');
-    }
-});
