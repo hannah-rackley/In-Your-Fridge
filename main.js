@@ -1,4 +1,4 @@
-import {recipeKey} from "variables";
+const { recipeKey } = require('./variables');
 
 let token;
 
