@@ -1,5 +1,13 @@
 let token;
 
+let closeLogin = () => {
+    let closeLoginWindow = document.querySelector('.close-login-modal-button');
+    closeLoginWindow.addEventListener('click', () => {
+        let loginModalWindow = document.querySelector('.login-modal-container');
+        loginModalWindow.classList.add('hidden');
+    });
+}
+
 let getToken = () => {
     let checkToken = localStorage.getItem("token");
     if (checkToken !== null) {
@@ -11,14 +19,6 @@ let getToken = () => {
 }
 
 token = getToken();
-
-let closeLogin = () => {
-    let closeLoginWindow = document.querySelector('.close-login-modal-button');
-    closeLoginWindow.addEventListener('click', () => {
-        let loginModalWindow = document.querySelector('.login-modal-container');
-        loginModalWindow.classList.add('hidden');
-    });
-}
                                       
 let loginButtonStatus = () => {
     let checkToken = localStorage.getItem("token");
@@ -35,6 +35,7 @@ loginButtonStatus();
 
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
+    let logoutButton = document.querySelector('.logout-button');
     if (logoutButton.textContent === 'Log Out') {
         localStorage.removeItem("token");
         logoutButton.textContent = 'Log In';
@@ -123,6 +124,7 @@ let getConfirmedStaples = (event) => {
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
+    console.log(stapleValues);
     postStaples(stapleValues);
     return stapleValues;
 }
