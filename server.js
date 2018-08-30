@@ -4,6 +4,7 @@ const pg = require('pg-promise')();
 const {SIGNATURE, name } = require('./variables');
 const dbConfig = `postgres://${name}@localhost:5432/fridge`;
 const db = pg(dbConfig);
+const fs = require('fs');
 
 //Create token
 let createToken = user => {
@@ -35,7 +36,7 @@ let postToken = async (req, res) => {
             .then(user => {
                 if (user.password === password && user.email === email) {
                     let token = createToken(user);
-                    res.end(token);
+                    res.send(token);
                     //later we will add in the ability to store this token in the users local storage
                 } else {
                     res.send('Uh-oh! I cannot assign a token for you!');
@@ -45,15 +46,13 @@ let postToken = async (req, res) => {
 }
 
 // GET /.inyourfridge/private
-let privatePage = (req, res) => {
-    res.send(`Hello, user #${req.jwt.userId}`);
-};
-  
 let checkToken = async (req, res, next) => {
+    console.log('headers:' + JSON.stringify(req.headers));
     let { authorization: token } = req.headers;
     let payload;
     try {
         payload = jwt.verify(token, SIGNATURE);
+        console.log(payload);
     } catch(err) {
         console.log(err);
     }
@@ -67,7 +66,57 @@ let checkToken = async (req, res, next) => {
     }
 };
 
+let postUserSignupInformation = (req, res) => {
+    readBody(req, (body) => {
+        let userInformation = JSON.parse(body);
+        db.query(`INSERT INTO
+                        users (email, password)
+                        VALUES ('` + userInformation.email + `', '` + userInformation.password + `')`)
+            .then((contents) => {
+                res.end('You are now signed up!');
+            });
+    });
+};
+
+let renderHomepage = (req, res) => {
+    fs.readFile('index.html', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            // console.log(contents);
+            res.end(contents);
+        }
+    });
+};
+
+let sendCSS = (req, res) => {
+    fs.readFile('styles.css', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.end(contents);
+        }
+    });
+};
+
+let sendJavascript = (req, res) => {
+    fs.readFile('main.js', 'utf8', (error, contents) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.end(contents);
+        }
+    });
+};
+
 let server = express();
+server.get('/', renderHomepage)
+server.get('/styles.css', sendCSS)
+server.get('/main.js', sendJavascript)
 server.post('/tokens', postToken)
+server.post('/users', postUserSignupInformation)
 // server.get('/tokens')
 server.listen(3000);

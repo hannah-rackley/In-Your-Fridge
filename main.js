@@ -1,3 +1,19 @@
+let token;
+
+let getToken = () => {
+    let checkToken = localStorage.getItem("token");
+    if (checkToken !== null) {
+        let loginModalWindow = document.querySelector('.login-modal-container');
+        loginModalWindow.classList.add('hidden');
+        return checkToken;
+    } else {
+        return null;
+    }
+}
+
+token = getToken();
+
+
 let closeLoginWindow = document.querySelector('.close-login-modal-button');
 closeLoginWindow.addEventListener('click', () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
@@ -25,6 +41,25 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
+<<<<<<< HEAD
+=======
+let staplesBtn = document
+  .querySelector(".staples-submit")
+  .addEventListener("click", function(e) {
+    e.preventDefault();
+    let staplesInput = document.querySelector(".staples_input");
+    displayStaple(staplesInput.value);
+  });
+
+
+let displayStaple = function(input) {
+    let staplesOutput = document.querySelector(".staples_output");
+    let stapleItem = document.createElement('div')
+    stapleItem.classList.add('.staple-item-output');
+    staplesOutput.appendChild(stapleItem);
+}
+
+>>>>>>> 91de2215965dd4029356560fa732f7e0080c9ee2
 let signupAnchor = document.querySelector('.signup-anchor');
 signupAnchor.addEventListener('click', () => {
     let signupContainer = document.querySelector('.signup-input-container');
@@ -100,6 +135,17 @@ let getRecipeInfo = function(recipeArrIds) {
         });
 }
 
-
 console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
+
+    let credentials = captureUserCredentials('login');
+    fetch('/tokens', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {'Content-Type': 'application/json'}
+    }).then(results => {
+        return results.text()})
+        .then(text => {
+            localStorage.setItem("token", JSON.stringify(text))
+        });
+});
 
