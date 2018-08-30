@@ -121,13 +121,30 @@ let postStaples = (req, res) => {
         let payload = jwt.verify(token, SIGNATURE);
         let userId = payload.userId;
         console.log(stapleIngredients);
-        db.query(`INSERT INTO 
-                        ingredients (userID, included)
-                        VALUES ('` + userId + `', '{` + stapleIngredients + `}')`)
+        db.query(`SELECT * FROM ingredients WHERE userid = ` + userId)
             .then((contents) => {
-                res.end('Your staple ingredients have beenstored!');
-            })
-            .catch((err) => {console.log(err)});
+                console.log(contents.length);
+                if (contents.length === 0) {
+                    db.query(`INSERT INTO 
+                        ingredients (userid, included)
+                        VALUES ('` + userId + `', '{` + stapleIngredients + `}')`)
+                        .then((contents) => {
+                            res.end('Your staple ingredients have been stored!');
+                        })
+                        .catch((err) => {console.log(err)});
+                }
+                else {
+                    db.query(`UPDATE 
+                        ingredients 
+                        SET included = '{` + stapleIngredients + `}'
+                        WHERE userid = '` + userId + `'`)
+                        .then((contents) => {
+                            res.end('Your staple ingredients have been updated!')
+                        })
+                        .catch((err) => {console.log(err)});
+                }
+            });
+        
     });
 };
 
