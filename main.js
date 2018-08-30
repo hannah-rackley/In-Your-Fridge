@@ -38,10 +38,36 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
+let showDeleteButtons = (event) => {
+    event.preventDefault();
+    if (event.target.textContent === 'Edit Staples') {
+        event.target.textContent = 'Done Editing';
+    } else {
+        event.target.textContent = 'Edit Staples';
+    };
+    let deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach((button) => {
+        button.classList.toggle('hidden');
+    });
+}
+
+let deleteStaple = (event) => {
+    var deleteButton = event.target;
+    var parent = deleteButton.parentElement;
+    parent.parentNode.removeChild(parent);
+}
+
 let displayStaple = function(input) {
     let staplesOutput = document.querySelector(".staples-output");
-    let stapleItem = document.createElement('div')
+    let stapleItem = document.createElement('div');
+    let deleteButton = document.createElement('input');
+    deleteButton.setAttribute('type', 'submit');
+    deleteButton.setAttribute('value', 'Remove');
+    deleteButton.classList.add('delete-button');
+    deleteButton.classList.add('hidden');
+    deleteButton.addEventListener('click', deleteStaple);
     stapleItem.textContent = input;
+    stapleItem.appendChild(deleteButton);
     stapleItem.classList.add('.staple-item-output');
     staplesOutput.appendChild(stapleItem);
 }
@@ -105,6 +131,14 @@ let setupEventListeners = () => {
 
     let closeLoginWindow = document.querySelector('.close-login-modal-button');
     closeLoginWindow.addEventListener('click', closeLogin);
+
+    let editStaples = document.querySelector('.edit-staples');
+    editStaples.addEventListener('click', showDeleteButtons);
+
+    let confirmStaples = document.querySelector('.confirm-staples');
+    confirmStaples.addEventListener('click', function(event) {
+        event.preventDefault();
+    })
 }
 
 setupEventListeners();
