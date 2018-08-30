@@ -114,12 +114,46 @@ let sendJavascript = (req, res) => {
     });
 };
 
+let postStaples = (req, res) => {
+    readBody(req, (body) => {
+        let stapleIngredients = JSON.parse(body);
+        let { authorization: token } = req.headers;
+        let payload = jwt.verify(token, SIGNATURE);
+        let userId = payload.userId;
+        console.log(stapleIngredients);
+        db.query(`SELECT * FROM ingredients WHERE userid = ` + userId)
+            .then((contents) => {
+                console.log(contents.length);
+                if (contents.length === 0) {
+                    db.query(`INSERT INTO 
+                        ingredients (userid, included)
+                        VALUES ('` + userId + `', '{` + stapleIngredients + `}')`)
+                        .then((contents) => {
+                            res.end('Your staple ingredients have been stored!');
+                        })
+                        .catch((err) => {console.log(err)});
+                }
+                else {
+                    db.query(`UPDATE 
+                        ingredients 
+                        SET included = '{` + stapleIngredients + `}'
+                        WHERE userid = '` + userId + `'`)
+                        .then((contents) => {
+                            res.end('Your staple ingredients have been updated!')
+                        })
+                        .catch((err) => {console.log(err)});
+                }
+            });
+        
+    });
+};
+
 let server = express();
 server.get('/', renderHomepage);
 server.get('/styles.css', sendCSS);
 server.get('/main.js', sendJavascript);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
-server.post('/staples', checkToken);
+server.post('/staples', checkToken, postStaples);
 // server.get('/tokens')
 server.listen(3000);

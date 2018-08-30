@@ -1,5 +1,3 @@
-// import { recipeKey } from './variable';
-
 let token;
 
 let closeLogin = () => {
@@ -119,7 +117,8 @@ let getExtraInput = (event) => {
 };
 
 let postStaples = (staples) => {
-    let parseToken = JSON.parse(token);
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
     let fetchPost = fetch('/staples', {
         method: 'POST',
         body: JSON.stringify(staples),
