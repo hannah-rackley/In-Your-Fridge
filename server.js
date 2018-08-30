@@ -114,12 +114,27 @@ let sendJavascript = (req, res) => {
     });
 };
 
+let postStaples = (req, res) => {
+    readBody(req, (body) => {
+        let stapleIngredients = JSON.parse(body);
+        console.log(stapleIngredients);
+        db.query(`UPDATE 
+                        ingredients SET
+                            included = included WHERE
+                                userID = 
+                        VALUES ()`)
+            .then((contents) => {
+
+            })
+    });
+};
+
 let server = express();
 server.get('/', renderHomepage);
 server.get('/styles.css', sendCSS);
 server.get('/main.js', sendJavascript);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
-server.post('/staples', checkToken);
+server.post('/staples', checkToken, postStaples);
 // server.get('/tokens')
 server.listen(3000);
