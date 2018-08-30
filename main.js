@@ -97,3 +97,7 @@ backToLoginButton.addEventListener('click', (event) => {
     loginContainer.classList.remove('hidden');
 });
 
+let logoutButton = document.querySelector('.logout-button');
+logoutButton.addEventListener('click', () => {
+    localStorage.removeItem("token");
+});
