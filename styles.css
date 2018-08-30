@@ -8,7 +8,8 @@ html, body {
     padding: 0;
     margin: 0;
     background-color: rgb(132, 129, 192);
-    font-family: Roboto, sans-serif;
+    font-family: 'Exo', sans-serif;
+    /* font-family: Roboto, sans-serif; */
 }
 .login-modal-container {
     display: flex;
@@ -30,6 +31,10 @@ html, body {
     flex-direction: column;
     background-color: rgb(209, 235, 241);
     align-items: center;
+    padding-bottom: 40px;
+    margin: 0 15%;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 8px;
 }
 .close-login-modal-button {
     align-self: flex-end;
@@ -40,9 +45,11 @@ html, body {
 .login-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 .login-email {
     margin: 0.3em;
+    padding-left: 10%;
 }
 .login-password {
     margin: 0.3em;
@@ -52,6 +59,10 @@ html, body {
     width: 10em;
     margin: 0.3em;
     align-self: center;
+    margin-top: 7%;
+    box-shadow: 10px;
+    text-shadow: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .staples-form {
@@ -107,3 +118,13 @@ html, body {
     margin-bottom: 1em;
 }
 
+.signup-header {
+    padding: 0 19%;
+}
+
+/* styling for tablets */
+@media only screen and (min-width: 768px) {
+    .login-email {
+        padding-left: 6%;
+    }
+}
