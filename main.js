@@ -3,11 +3,8 @@
 let token;
 
 let closeLogin = () => {
-    let closeLoginWindow = document.querySelector('.close-login-modal-button');
-    closeLoginWindow.addEventListener('click', () => {
-        let loginModalWindow = document.querySelector('.login-modal-container');
-        loginModalWindow.classList.add('hidden');
-    });
+    let loginModalWindow = document.querySelector('.login-modal-container');
+    loginModalWindow.classList.add('hidden');
 }
 
 let getToken = () => {
