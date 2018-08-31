@@ -69,6 +69,18 @@ let checkToken = async (req, res, next) => {
     }
 };
 
+let orderedByTime = (recipeArr) => {
+    recipeArr.sort(function(a, b) {
+    if (a[3] > b[3]) return 1;
+    if (a[3] < b[3]) return -1;
+    if (a[3] === b[3]) {
+        if (a[0] > b[0]) return 1;
+	    if (a[0] < b[0]) return -1;
+    }
+    }); 
+    return(recipeArr);
+};
+
 let getRecipeInfo = function(recipeArrIds, res) {
     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
     let suffixUrl = '&includeNutrition=false';
@@ -129,18 +141,6 @@ let getRecipesfromIngreds = (req, res) => {
         });
     });
 }
-
-let orderedByTime = (recipeArr) => {
-    recipeArr.sort(function(a, b) {
-    if (a[3] > b[3]) return 1;
-    if (a[3] < b[3]) return -1;
-    if (a[3] === b[3]) {
-        if (a[0] > b[0]) return 1;
-	    if (a[0] < b[0]) return -1;
-    }
-    }); 
-    return(recipeArr);
-};
 
 let postUserSignupInformation = (req, res) => {
     readBody(req, (body) => {
