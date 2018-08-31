@@ -134,7 +134,7 @@ let getRecipesfromIngreds = (req, res) => {
             .then((results) => {
                 results = JSON.parse(results);
                 results = orderedByTime(results);
-                res.send(results)})
+                res.send(JSON.stringify(results))})
             .catch(err => console.log(err));
         })
         .catch(function (err) {
