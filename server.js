@@ -119,7 +119,7 @@ let getRecipeInfo = function(recipeArrIds) {
         .then(function(recipeObjArr) {
             console.log(recipeObjArr);
             let newValues = recipeObjArr.map(recipe => {
-                newRecipes.push([recipe.readyInMinutes, recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
+                newRecipes.push([recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes]);
                 orderedByTime(newRecipes);
             })
             console.log(newRecipes);
