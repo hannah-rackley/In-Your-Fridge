@@ -119,7 +119,9 @@ let getRecipesfromIngreds = (req, res) => {
         .then(function(recipeObjArr) {
             let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
             getRecipeInfo(recipeArrIds, res)
-            .then(results => res.send(results))
+            .then((results) => {
+                results = orderedByTime(results);
+                res.send(results)})
             .catch(err => console.log(err));
         })
         .catch(function (err) {
@@ -127,6 +129,18 @@ let getRecipesfromIngreds = (req, res) => {
         });
     });
 }
+
+let orderedByTime = (recipeArr) => {
+    recipeArr.sort(function(a, b) {
+    if (a[3] > b[3]) return 1;
+    if (a[3] < b[3]) return -1;
+    if (a[3] === b[3]) {
+        if (a[0] > b[0]) return 1;
+	    if (a[0] < b[0]) return -1;
+    }
+    }); 
+    return(recipeArr);
+};
 
 let postUserSignupInformation = (req, res) => {
     readBody(req, (body) => {
@@ -138,40 +152,6 @@ let postUserSignupInformation = (req, res) => {
                 res.end('You are now signed up!');
             })
             .catch((err) => {console.log(err)});
-    });
-};
-
-let renderHomepage = (req, res) => {
-    fs.readFile('index.html', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            // console.log(contents);
-            res.end(contents);
-        }
-    });
-};
-
-let sendCSS = (req, res) => {
-    fs.readFile('styles.css', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.end(contents);
-        }
-    });
-};
-
-let sendJavascript = (req, res) => {
-    fs.readFile('main.js', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.end(contents);
-        }
     });
 };
 
@@ -222,9 +202,7 @@ let getStaples = (req, res) => {
 };
 
 let server = express();
-server.get('/', renderHomepage);
-server.get('/styles.css', sendCSS);
-server.get('/main.js', sendJavascript);
+server.use(express.static('./public'))
 server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
