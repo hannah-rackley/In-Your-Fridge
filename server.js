@@ -201,8 +201,20 @@ let getStaples = (req, res) => {
         })
 };
 
+let returnEmail = (req, res) => {
+    let { authorization: token } = req.headers;
+    let payload = jwt.verify(token, SIGNATURE);
+    let userId = payload.userId;
+    db.query(`SELECT email FROM users WHERE id = '` + userId + `'`)
+        .then((contents) => {
+            let contentsObject = contents[0];
+            res.send(JSON.stringify(contentsObject.email));
+        })
+};
+
 let server = express();
 server.use(express.static('./public'))
+server.get('/retrieveemail', checkToken, returnEmail);
 server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);

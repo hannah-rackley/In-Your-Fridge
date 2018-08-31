@@ -5,6 +5,25 @@ let closeLogin = () => {
     loginModalWindow.classList.add('hidden');
 }
 
+let displayUserEmail = () => {
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
+    let userEmailContainer = document.querySelector('.navigation-user-email-container');
+    let userEmail = document.createElement('p');
+    userEmail.classList.add('navigation-user-email')
+    let fetchGet = fetch('/retrieveemail', {
+        method: 'GET',
+        headers: {'authorization': parseToken}
+    }).then(contents => {
+        return contents.text()})
+        .then(text => {
+            let parsedText = JSON.parse(text);
+            userEmail.textContent = parsedText;
+            userEmailContainer.appendChild(userEmail);
+        })
+        .catch(err => console.log(err));
+};
+
 let getStaples = () => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
@@ -24,6 +43,7 @@ let getStaples = () => {
 let getToken = () => {
     let checkToken = localStorage.getItem("token");
     if (checkToken !== null) {
+        displayUserEmail();
         closeLogin();
         getStaples();
         return checkToken;
@@ -51,7 +71,10 @@ let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
     let staplesOutput = document.querySelector('.staples-output');
+    let userEmailContainer = document.querySelector('.navigation-user-email-container');
+    let userEmail = document.querySelector('.navigation-user-email')
     if (logoutButton.textContent === 'Log Out') {
+        userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
         while (staplesOutput.firstChild) {
             staplesOutput.removeChild(staplesOutput.firstChild);
@@ -228,6 +251,10 @@ let submitLoginInfo = (event) => {
     event.preventDefault();
     captureUserCredentials('login');
     let credentials = captureUserCredentials('login');
+    let userEmail = document.querySelector('.login-email-input');
+    let userPassword = document.querySelector('.login-password-input');
+    userEmail.value = '';
+    userPassword.value = '';
     fetch('/tokens', {
         method: 'POST',
         body: JSON.stringify(credentials),
@@ -237,6 +264,7 @@ let submitLoginInfo = (event) => {
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
             getStaples();
+            displayUserEmail(credentials.email);
             loginButtonStatus();
         });
 };
