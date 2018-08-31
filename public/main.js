@@ -206,6 +206,10 @@ let getConfirmedIngredients = (event) => {
     event.preventDefault();
     let stapleValues = [];
     let allIngredients = [];
+    let recipesContainer = document.querySelector('.recipes-container');
+    while (recipesContainer.firstChild) {
+        recipesContainer.removeChild(recipesContainer.firstChild);
+    };
 
     //Create an array that holds all of the staples
     let staples = document.querySelectorAll('.staples-item-output');
