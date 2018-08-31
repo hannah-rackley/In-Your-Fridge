@@ -68,69 +68,11 @@ let checkToken = async (req, res, next) => {
     }
 };
 
-let getRecipesfromIngreds = (foodArr) => {
-    let prefixUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
-    let suffixUrl = "&limitLicense=false&number=5&ranking=2"
-    let ingreRootUrl = foodArr.join("%2C");
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-        method: "GET",
-        headers: {
-            "X-Mashape-Key": recipeKey,
-            Accept: 'application/json'
-        }
-    })
-        .then(function (result) {
-            let promiseRecipes = result.json();
-            return promiseRecipes;
-        })
-        .then(function(recipeObjArr) {
-            // console.log(recipeObjArr);
-            let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
-            getRecipeInfo(recipeArrIds);
-            })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
-
 let orderedByTime = (recipeArr) => {
     recipeArr.sort(function(a, b) {
         return a.readyInMinutes - b.readyInMinutes;
     });console.log(recipeArr);
 };
-
-let getRecipeInfo = function(recipeArrIds) {
-    let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
-    let suffixUrl = '&includeNutrition=false';
-    let ingreRootUrl = recipeArrIds.join("%2C");
-    let newRecipes = [];
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-        method: "GET",
-        headers: {
-            "X-Mashape-Key": recipeKey,
-            Accept: 'application/json'
-        }
-    })
-        .then(function (result) {
-            let promiseRecipes = result.json();
-            return promiseRecipes;
-        })
-        .then(function(recipeObjArr) {
-            console.log(recipeObjArr);
-            let newValues = recipeObjArr.map(recipe => {
-                newRecipes.push([recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes]);
-                orderedByTime(newRecipes);
-            })
-            console.log(newRecipes);
-            })
-        .catch(function (err) {
-            console.log(err);
-        });
-}
-
-console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
-
 
 let postUserSignupInformation = (req, res) => {
     readBody(req, (body) => {
@@ -142,40 +84,6 @@ let postUserSignupInformation = (req, res) => {
                 res.end('You are now signed up!');
             })
             .catch((err) => {console.log(err)});
-    });
-};
-
-let renderHomepage = (req, res) => {
-    fs.readFile('index.html', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            // console.log(contents);
-            res.end(contents);
-        }
-    });
-};
-
-let sendCSS = (req, res) => {
-    fs.readFile('styles.css', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.end(contents);
-        }
-    });
-};
-
-let sendJavascript = (req, res) => {
-    fs.readFile('main.js', 'utf8', (error, contents) => {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.end(contents);
-        }
     });
 };
 
@@ -225,9 +133,7 @@ let getStaples = (req, res) => {
 };
 
 let server = express();
-server.get('/', renderHomepage);
-server.get('/styles.css', sendCSS);
-server.get('/main.js', sendJavascript);
+server.use(express.static('./public'))
 server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
