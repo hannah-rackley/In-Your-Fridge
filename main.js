@@ -50,8 +50,12 @@ loginButtonStatus();
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
+    let staplesOutput = document.querySelector('.staples-output');
     if (logoutButton.textContent === 'Log Out') {
         localStorage.removeItem("token");
+        while (staplesOutput.firstChild) {
+            staplesOutput.removeChild(staplesOutput.firstChild);
+        }
         logoutButton.textContent = 'Log In';
     } else if (logoutButton.textContent === 'Log In') {
         console.log('log in');
