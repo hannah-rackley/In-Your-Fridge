@@ -100,21 +100,21 @@ let getRecipesfromIngreds = (req, res) => {
     res.header("Access-Control-Allow-Methods", "*");
     readBody(req, (body) => {
         let foodArr = JSON.parse(body);
-    let prefixUrl =
-      "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
-    let suffixUrl = "&limitLicense=false&number=5&ranking=2"
-    let ingreRootUrl = foodArr.join("%2C");
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-        method: "GET",
-        headers: {
-            "X-Mashape-Key": recipeKey,
-            Accept: 'application/json'
-        }
-    })
-        .then(function (result) {
-            let promiseRecipes = result.json();
-            return promiseRecipes;
+        let prefixUrl =
+        "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
+        let suffixUrl = "&limitLicense=false&number=5&ranking=2"
+        let ingreRootUrl = foodArr.join("%2C");
+        fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+            method: "GET",
+            headers: {
+                "X-Mashape-Key": recipeKey,
+                Accept: 'application/json'
+            }
         })
+            .then(function (result) {
+                let promiseRecipes = result.json();
+                return promiseRecipes;
+            })
         .then(function(recipeObjArr) {
             let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
             return getRecipeInfo(recipeArrIds, res);

@@ -50,8 +50,12 @@ loginButtonStatus();
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
+    let staplesOutput = document.querySelector('.staples-output');
     if (logoutButton.textContent === 'Log Out') {
         localStorage.removeItem("token");
+        while (staplesOutput.firstChild) {
+            staplesOutput.removeChild(staplesOutput.firstChild);
+        }
         logoutButton.textContent = 'Log In';
     } else if (logoutButton.textContent === 'Log In') {
         console.log('log in');
@@ -171,6 +175,39 @@ let getConfirmedIngredients = (event) => {
     postIngredients('ingredients', allIngredients);
     return allIngredients;
 }
+
+let displayRecipes = (recipes) => {
+    recipes.forEach(item => {
+        let recipesContainer = document.querySelector('.recipes-container');
+        let recipe = document.createElement('div');
+        let recipeName = document.createElement('p');
+        let recipeURL = document.createElement('a');
+        let recipePhoto = document.createElement('img');
+        recipe.classList.add('recipe');
+        recipeName.classList.add('recipe-name');
+        recipePhoto.classList.add('recipe-photo');
+        recipeURL.classList.add('recipe-url');
+        console.log(item);
+        recipeName.textContent = item[0];
+        recipePhoto.setAttribute('src', item[2]);
+        recipeURL.setAttribute('href', item[1]);
+        recipeURL.setAttribute('target', '_blank');
+        recipeURL.setAttribute('rel', 'noopener noreferrer');
+        recipeURL.appendChild(recipeName);
+        recipeURL.appendChild(recipePhoto);
+        recipe.appendChild(recipeURL);
+        recipesContainer.appendChild(recipe);
+    });
+};
+
+let recipeExamples = [
+    ["Apple Fritters", "https://spoonacular.com/apple-fritters-556470", "https://spoonacular.com/recipeImages/556470-556x370.jpg"], 
+    ["Cinnamon Apple Crisp", "https://spoonacular.com/cinnamon-apple-crisp-47950", "https://spoonacular.com/recipeImages/47950-556x730.jpg"], 
+    ["Brown Butter Apple Crumble", "https://spoonacular.com/brown-butter-apple-crumble-534573", "https://spoonacular.com/recipeImages/534573-556x370.jpg"], 
+    ["Apple Tart", "https://spoonacular.com/apple-tart-47732", "https://spoonacular.com/recipeImages/47732-556x370.jpg"], 
+    ["Apple Tart", "https://spoonacular.com/apple-tart-47891", "https://spoonacular.com/recipeImages/47891-556x370.jpg"]
+];
+displayRecipes(recipeExamples);
 
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');
