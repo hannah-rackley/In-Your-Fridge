@@ -148,10 +148,22 @@ let postStaples = (req, res) => {
     });
 };
 
+let getStaples = (req, res) => {
+    let { authorization: token } = req.headers;
+    let payload = jwt.verify(token, SIGNATURE);
+    let userId = payload.userId;
+    db.query(`SELECT included FROM ingredients WHERE userid = '` + userId + `'`)
+        .then((contents) => {
+            let contentsObject = contents[0];
+            res.send(JSON.stringify(contentsObject.included));
+        })
+};
+
 let server = express();
 server.get('/', renderHomepage);
 server.get('/styles.css', sendCSS);
 server.get('/main.js', sendJavascript);
+server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
 server.post('/staples', checkToken, postStaples);
