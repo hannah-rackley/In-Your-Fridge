@@ -94,6 +94,11 @@ let getRecipesfromIngreds = (foodArr) => {
         });
 }
 
+let orderedByTime = (recipeArr) => {
+    recipeArr.sort(function(a, b) {
+        return a.readyInMinutes - b.readyInMinutes;
+    });console.log(recipeArr);
+};
 
 let getRecipeInfo = function(recipeArrIds) {
     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
@@ -114,7 +119,8 @@ let getRecipeInfo = function(recipeArrIds) {
         .then(function(recipeObjArr) {
             console.log(recipeObjArr);
             let newValues = recipeObjArr.map(recipe => {
-                newRecipes.push([recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
+                newRecipes.push([recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes]);
+                orderedByTime(newRecipes);
             })
             console.log(newRecipes);
             })
