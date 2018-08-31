@@ -59,7 +59,22 @@ html, body {
     justify-content: flex-end;
     flex-direction: column;
 }
-
+.recipe {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 0;
+}
+.recipe-url {
+    align-self: center;
+}
+.recipe-name {
+    text-align: center;
+}
+.recipe-photo {
+    width: 10em;
+    height: 10em;
+    align-self: center;
+}
 .logo {
     font-family: 'Exo', sans-serif;
 }
