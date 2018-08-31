@@ -133,12 +133,12 @@ let getExtraInput = (event) => {
     extraInput.value = "";
 };
 
-let postStaples = (staples) => {
+let postIngredients = (prefix, ingredients) => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
-    let fetchPost = fetch('/staples', {
+    let fetchPost = fetch(`/${prefix}`, {
         method: 'POST',
-        body: JSON.stringify(staples),
+        body: JSON.stringify(ingredients),
         headers: {'Content-Type': 'application/json', 
         'authorization': parseToken}
     });
@@ -147,20 +147,24 @@ let postStaples = (staples) => {
 let getConfirmedIngredients = (event) => {
     event.preventDefault();
     let stapleValues = [];
+    let allIngredients = [];
+
+    //Create an array that holds all of the staples
     let staples = document.querySelectorAll('.staples-item-output');
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
-    postStaples(stapleValues);
-    console.log(stapleValues);
-    let extraValues = [];
+    postIngredients('staples', stapleValues);
+    allIngredients = stapleValues;
+
+    //Add extras to allIngredients array
     let extras = document.querySelectorAll('.extras-item-output');
     extras.forEach(extra => {
-        extraValues.push(extra.firstChild.textContent);
+        allIngredients.push(extra.firstChild.textContent);
     });
-    console.log(extraValues);
-    console.log(stapleValues.concat(extraValues));
-    return stapleValues.concat(extraValues);
+
+    postIngredients('ingredients', allIngredients);
+    return allIngredients;
 }
 
 let showSignupContainer = () => {
