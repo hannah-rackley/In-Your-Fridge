@@ -10,6 +10,16 @@ html, body {
     background-color: rgb(132, 129, 192);
     font-family: 'Exo', sans-serif;
 }
+.navigation-menu {
+    border-style: solid;
+    display: flex;
+    justify-content: space-between;
+    height: 2.5em;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-width: thin;
+}
 .login-modal-container {
     display: flex;
     position: fixed;
