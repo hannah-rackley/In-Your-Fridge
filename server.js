@@ -96,8 +96,13 @@ let getRecipesfromIngreds = (foodArr) => {
 
 let orderedByTime = (recipeArr) => {
     recipeArr.sort(function(a, b) {
-        return a.readyInMinutes - b.readyInMinutes;
-    });console.log(recipeArr);
+    if (a[3] > b[3]) return 1;
+    if (a[3] < b[3]) return -1;
+    if (a[3] === b[3]) {
+        if (a[0] > b[0]) return 1;
+	    if (a[0] < b[0]) return -1;
+    }
+    }); return(recipeArr);
 };
 
 let getRecipeInfo = function(recipeArrIds) {
