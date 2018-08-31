@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 <body>
-    <h1 class="logo"> in your fridge </h1>
     <div class="login-modal-container">
         <div class="login-main-container">
             <button type="button" class="close-login-modal-button">
@@ -30,9 +29,9 @@
                     </label>
                     <button type="submit" class="login-submit-button">Log In</button>
                 </form>
-                <h3 class="signup-header">
+                <p class="signup-header">
                         Are you new to in your fridge? <span class="signup-anchor">Sign up and create an account!</span>
-                </h3>
+                </p>
             </div>
             <div class="signup-modal-container hidden">
                 <div class="signup-form-container">
@@ -63,21 +62,26 @@
         </div>
     </div>
     <div class="all-ingredients-container">
+        <h1 class="logo"> in your fridge </h1>
         <div class="ingredient-container">            
                 <form class="staples-form">
                     <label>
-                        <span>Enter an ingredient item you keep as a staple</span>
+                        <div class="input-labels">
+                            <span>Enter an ingredient item you keep as a staple</span> <br>
                             <input class="staples-input" placeholder="ex) bread"/>
                             <button class="staples-submit" type="submit">Submit item</button>
+                        </div>
                     </label>
                 </form>
         </div>
         <div class="ingredient-container">            
             <form class="extras-form">
                 <label>
-                    <span class="input-labels">Enter an extra ingredient that you have on hand, that isn't a staple</span>
+                    <div class="input-labels">
+                        <span>Enter an extra ingredient that you have on hand, that isn't a staple</span><br>
                         <input class="extras-input" placeholder="ex) chicken"/>
                         <button class="extras-submit" type="submit">Submit item</button>
+                    </div>
                 </label>
             </form>
         </div>  
@@ -92,7 +96,6 @@
         </div>
     </div>
     <div class="recipes-container">
-        
     </div>
     <button type="button" class="logout-button">Log In</button>
     <script src="main.js"></script>

@@ -226,62 +226,6 @@ let submitLoginInfo = (event) => {
         });
 };
 
-// let getRecipesfromIngreds = (foodArr) => {
-//     let prefixUrl =
-//       "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
-//     let suffixUrl = "&limitLicense=false&number=5&ranking=2"
-//     let ingreRootUrl = foodArr.join("%2C");
-//     fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-//         method: "GET",
-//         headers: {
-//             "X-Mashape-Key": recipeKey,
-//             Accept: 'application/json'
-//         }
-//     })
-//         .then(function (result) {
-//             let promiseRecipes = result.json();
-//             return promiseRecipes;
-//         })
-//         .then(function(recipeObjArr) {
-//             // console.log(recipeObjArr);
-//             let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
-//             getRecipeInfo(recipeArrIds);
-//             })
-//         .catch(function (err) {
-//             console.log(err);
-//         });
-// }
-
-
-// let getRecipeInfo = function(recipeArrIds) {
-//     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
-//     let suffixUrl = '&includeNutrition=false';
-//     let ingreRootUrl = recipeArrIds.join("%2C");
-//     fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-//         method: "GET",
-//         headers: {
-//             "X-Mashape-Key": recipeKey,
-//             Accept: 'application/json'
-//         }
-//     })
-//         .then(function (result) {
-//             let x = result.json();
-//             return x;
-//         })
-//         .then(function(recipeObjArr) {
-//             console.log(recipeObjArr);
-//             let newValues = recipeObjArr.map(recipe => {
-//                 console.log([recipe.title, recipe.spoonacularSourceUrl, recipe.image]);
-//                 console.log(newValues);
-//             })
-//             })
-//         .catch(function (err) {
-//             console.log(err);
-//         });
-// }
-
-// console.log(getRecipesfromIngreds(['sugar', 'apple', 'flour']));
-
 let backToLogin = (event) => {
     event.preventDefault();
     let signupContainer = document.querySelector('.signup-modal-container');
