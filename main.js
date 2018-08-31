@@ -137,6 +137,31 @@ let getExtraInput = (event) => {
     extraInput.value = "";
 };
 
+let displayRecipes = (recipes) => {
+    recipes.forEach(item => {
+        console.log(recipes);
+        let recipesContainer = document.querySelector('.recipes-container');
+        let recipe = document.createElement('div');
+        let recipeName = document.createElement('p');
+        let recipeURL = document.createElement('a');
+        let recipePhoto = document.createElement('img');
+        recipe.classList.add('recipe');
+        recipeName.classList.add('recipe-name');
+        recipePhoto.classList.add('recipe-photo');
+        recipeURL.classList.add('recipe-url');
+        console.log(item);
+        recipeName.textContent = item[0];
+        recipePhoto.setAttribute('src', item[2]);
+        recipeURL.setAttribute('href', item[1]);
+        recipeURL.setAttribute('target', '_blank');
+        recipeURL.setAttribute('rel', 'noopener noreferrer');
+        recipeURL.appendChild(recipeName);
+        recipeURL.appendChild(recipePhoto);
+        recipe.appendChild(recipeURL);
+        recipesContainer.appendChild(recipe);
+    });
+};
+
 let postIngredients = (prefix, ingredients) => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
@@ -146,10 +171,11 @@ let postIngredients = (prefix, ingredients) => {
         headers: {'Content-Type': 'application/json', 
         'authorization': parseToken}
     }).then((contents) => {
-        console.log('hello');
         return contents.text();
     }).then((results) => {
-        console.log('hi');
+        results = JSON.parse(results);
+        displayRecipes(results);
+        console.log(results);
     })
 }
 
@@ -176,38 +202,14 @@ let getConfirmedIngredients = (event) => {
     return allIngredients;
 }
 
-let displayRecipes = (recipes) => {
-    recipes.forEach(item => {
-        let recipesContainer = document.querySelector('.recipes-container');
-        let recipe = document.createElement('div');
-        let recipeName = document.createElement('p');
-        let recipeURL = document.createElement('a');
-        let recipePhoto = document.createElement('img');
-        recipe.classList.add('recipe');
-        recipeName.classList.add('recipe-name');
-        recipePhoto.classList.add('recipe-photo');
-        recipeURL.classList.add('recipe-url');
-        console.log(item);
-        recipeName.textContent = item[0];
-        recipePhoto.setAttribute('src', item[2]);
-        recipeURL.setAttribute('href', item[1]);
-        recipeURL.setAttribute('target', '_blank');
-        recipeURL.setAttribute('rel', 'noopener noreferrer');
-        recipeURL.appendChild(recipeName);
-        recipeURL.appendChild(recipePhoto);
-        recipe.appendChild(recipeURL);
-        recipesContainer.appendChild(recipe);
-    });
-};
-
-let recipeExamples = [
-    ["Apple Fritters", "https://spoonacular.com/apple-fritters-556470", "https://spoonacular.com/recipeImages/556470-556x370.jpg"], 
-    ["Cinnamon Apple Crisp", "https://spoonacular.com/cinnamon-apple-crisp-47950", "https://spoonacular.com/recipeImages/47950-556x730.jpg"], 
-    ["Brown Butter Apple Crumble", "https://spoonacular.com/brown-butter-apple-crumble-534573", "https://spoonacular.com/recipeImages/534573-556x370.jpg"], 
-    ["Apple Tart", "https://spoonacular.com/apple-tart-47732", "https://spoonacular.com/recipeImages/47732-556x370.jpg"], 
-    ["Apple Tart", "https://spoonacular.com/apple-tart-47891", "https://spoonacular.com/recipeImages/47891-556x370.jpg"]
-];
-displayRecipes(recipeExamples);
+// let recipeExamples = [
+//     ["Apple Fritters", "https://spoonacular.com/apple-fritters-556470", "https://spoonacular.com/recipeImages/556470-556x370.jpg"], 
+//     ["Cinnamon Apple Crisp", "https://spoonacular.com/cinnamon-apple-crisp-47950", "https://spoonacular.com/recipeImages/47950-556x730.jpg"], 
+//     ["Brown Butter Apple Crumble", "https://spoonacular.com/brown-butter-apple-crumble-534573", "https://spoonacular.com/recipeImages/534573-556x370.jpg"], 
+//     ["Apple Tart", "https://spoonacular.com/apple-tart-47732", "https://spoonacular.com/recipeImages/47732-556x370.jpg"], 
+//     ["Apple Tart", "https://spoonacular.com/apple-tart-47891", "https://spoonacular.com/recipeImages/47891-556x370.jpg"]
+// ];
+// displayRecipes(recipeExamples);
 
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');

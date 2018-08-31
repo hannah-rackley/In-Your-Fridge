@@ -73,7 +73,7 @@ let getRecipeInfo = function(recipeArrIds, res) {
     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
     let suffixUrl = '&includeNutrition=false';
     let ingreRootUrl = recipeArrIds.join("%2C");
-    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+    let fetchPromise = fetch(prefixUrl + ingreRootUrl + suffixUrl, {
         method: "GET",
         headers: {
             "X-Mashape-Key": recipeKey,
@@ -86,11 +86,12 @@ let getRecipeInfo = function(recipeArrIds, res) {
         })
         .then(function(recipeObjArr) {
             newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes]);
-            res.send(newRecipes);
+            return JSON.stringify(newRecipes);
         })
         .catch(function (err) {
             console.log(err);
         });
+    return fetchPromise;
 }
 
 let getRecipesfromIngreds = (req, res) => {
@@ -117,7 +118,9 @@ let getRecipesfromIngreds = (req, res) => {
             })
         .then(function(recipeObjArr) {
             let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
-            return getRecipeInfo(recipeArrIds, res);
+            getRecipeInfo(recipeArrIds, res)
+            .then(results => res.send(results))
+            .catch(err => console.log(err));
         })
         .catch(function (err) {
             console.log(err);
