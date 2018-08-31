@@ -141,7 +141,12 @@ let postIngredients = (prefix, ingredients) => {
         body: JSON.stringify(ingredients),
         headers: {'Content-Type': 'application/json', 
         'authorization': parseToken}
-    });
+    }).then((contents) => {
+        console.log('hello');
+        return contents.text();
+    }).then((results) => {
+        console.log('hi');
+    })
 }
 
 let getConfirmedIngredients = (event) => {
