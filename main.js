@@ -5,10 +5,27 @@ let closeLogin = () => {
     loginModalWindow.classList.add('hidden');
 }
 
+let getStaples = () => {
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
+    let fetchGet = fetch('/retrieveingredients', {
+        method: 'GET',
+        headers: {'authorization': parseToken}
+    }).then(contents => {
+        return contents.text()})
+        .then(text => {
+            let ingredientsArray = JSON.parse(text);
+            ingredientsArray.forEach(item => {
+                displayIngredient('staples', item);
+            })
+        });
+};
+
 let getToken = () => {
     let checkToken = localStorage.getItem("token");
     if (checkToken !== null) {
         closeLogin();
+        getStaples();
         return checkToken;
     } else {
         return null;
@@ -126,22 +143,6 @@ let postStaples = (staples) => {
         'authorization': parseToken}
     });
 }
-
-let getStaples = () => {
-    let localStorageToken = localStorage.getItem("token");
-    let parseToken = JSON.parse(localStorageToken);
-    let fetchGet = fetch('/retrieveingredients', {
-        method: 'GET',
-        headers: {'authorization': parseToken}
-    }).then(contents => {
-        return contents.text()})
-        .then(text => {
-            let ingredientsArray = JSON.parse(text);
-            ingredientsArray.forEach(item => {
-                displayIngredient('staples', item);
-            })
-        });
-};
 
 let getConfirmedIngredients = (event) => {
     event.preventDefault();
