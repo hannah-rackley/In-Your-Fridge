@@ -127,6 +127,22 @@ let postStaples = (staples) => {
     });
 }
 
+let getStaples = () => {
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
+    let fetchGet = fetch('/retrieveingredients', {
+        method: 'GET',
+        headers: {'authorization': parseToken}
+    }).then(contents => {
+        return contents.text()})
+        .then(text => {
+            let ingredientsArray = JSON.parse(text);
+            ingredientsArray.forEach(item => {
+                displayIngredient('staples', item);
+            })
+        });
+};
+
 let getConfirmedIngredients = (event) => {
     event.preventDefault();
     let stapleValues = [];
@@ -134,7 +150,7 @@ let getConfirmedIngredients = (event) => {
     staples.forEach(staple => {
         stapleValues.push(staple.firstChild.textContent);
     });
-    //postStaples(stapleValues);
+    postStaples(stapleValues);
     console.log(stapleValues);
     let extraValues = [];
     let extras = document.querySelectorAll('.extras-item-output');
@@ -171,6 +187,7 @@ let submitLoginInfo = (event) => {
         return results.text()})
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
+            getStaples();
             loginButtonStatus();
         });
 };
