@@ -291,8 +291,8 @@ let setupEventListeners = () => {
     let submitSignupInformation = document.querySelector('.signup-form');
     submitSignupInformation.addEventListener('submit', submitSignupInfo);
 
-    let signupAnchor = document.querySelector('.signup-anchor');
-    signupAnchor.addEventListener('click', showSignupContainer);
+    let signupWindowButton = document.querySelector('.signup-window-button');
+    signupWindowButton.addEventListener('click', showSignupContainer);
 
     let closeLoginWindow = document.querySelector('.close-login-modal-button');
     closeLoginWindow.addEventListener('click', closeLogin);

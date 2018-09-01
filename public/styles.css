@@ -102,10 +102,6 @@ html, body {
     margin: 0;
     color: #444444;
 }
-
-.signup-anchor {
-    cursor: pointer;
-}
 .signup-form-container {
     display: flex;
     flex-direction: column;
@@ -145,11 +141,17 @@ html, body {
     margin: 0.3em;
     margin-bottom: 1em;
 }
-
+.signup-window-button-container {
+    display: flex;
+    flex-direction: column;
+}
 .signup-header {
     padding: 0 19%;
 }
-
+.signup-window-button {
+    width: 10em;
+    align-self: center;
+}
 .staples-container {
     margin-top: -90px;
     padding-top: 0;
