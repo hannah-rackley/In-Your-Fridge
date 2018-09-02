@@ -50,19 +50,16 @@ let postToken = async (req, res) => {
 
 // GET /.inyourfridge/private
 let checkToken = async (req, res, next) => {
-    // console.log('headers:' + JSON.stringify(req.headers));
     let { authorization: token } = req.headers;
     let payload;
     try {
         payload = jwt.verify(token, SIGNATURE);
-        // console.log(payload);
     } catch(err) {
         console.log(err);
     }
 
     if (payload) {
         req.jwt = payload;
-        // console.log(req.jwt);
         next();
     } else {
         res.send('Woops! you do not have a token!');
@@ -97,7 +94,7 @@ let getRecipeInfo = function(recipeArrIds, res) {
             return promiseRecipes;
         })
         .then(function(recipeObjArr) {
-            newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes]);
+            newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes, recipe.id]);
             return JSON.stringify(newRecipes);
         })
         .catch(function (err) {
@@ -213,6 +210,21 @@ let returnEmail = (req, res) => {
         })
 };
 
+let saveLikedRecipes = (req, res) => {
+    readBody(req, body => {
+        console.log(req.jwt);
+        let userId = req.jwt.userId;
+        let recipeId = body;
+        db.one(`
+            INSERT INTO liked (userid, liked, recipeid) 
+            VALUES ($1, true, $2)
+            RETURNING *;
+        `, [parseInt(userId), parseInt(recipeId)])
+        .then(data => res.send(data))
+        .catch(err => res.send(err));
+    })
+}
+
 let server = express();
 server.use(express.static('./public'))
 server.get('/retrieveemail', checkToken, returnEmail);
@@ -220,6 +232,7 @@ server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
 server.post('/staples', checkToken, postStaples);
+server.post('/like', checkToken, saveLikedRecipes);
 server.post('/ingredients', checkToken, getRecipesfromIngreds);
 // server.get('/tokens')
 server.listen(3000);

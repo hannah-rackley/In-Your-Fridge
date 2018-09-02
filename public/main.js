@@ -162,28 +162,42 @@ let getExtraInput = (event) => {
 
 let displayRecipes = (recipes) => {
     recipes.forEach(item => {
-        console.log(recipes);
         let recipesContainer = document.querySelector('.recipes-container');
+        let recipeHeart = document.createElement('h1');
         let recipe = document.createElement('div');
         let recipeName = document.createElement('p');
         let recipeURL = document.createElement('a');
         let recipePhoto = document.createElement('img');
         recipe.classList.add('recipe');
+        recipeHeart.textContent= "♥";
         recipeName.classList.add('recipe-name');
         recipePhoto.classList.add('recipe-photo');
         recipeURL.classList.add('recipe-url');
-        console.log(item);
         recipeName.textContent = item[0];
         recipePhoto.setAttribute('src', item[2]);
+        recipeHeart.setAttribute('class', 'heart')
         recipeURL.setAttribute('href', item[1]);
         recipeURL.setAttribute('target', '_blank');
         recipeURL.setAttribute('rel', 'noopener noreferrer');
         recipeURL.appendChild(recipeName);
         recipeURL.appendChild(recipePhoto);
         recipe.appendChild(recipeURL);
+        recipe.appendChild(recipeHeart);
+        recipeHeart.addEventListener('click',() => likeRecipe(item[4]));
         recipesContainer.appendChild(recipe);
     });
 };
+
+let likeRecipe = (id) => {
+    event.target.classList.toggle("selected");
+    return fetch('/like', {
+        method: "POST",
+        body: JSON.stringify(id),
+        headers: {'Content-Type': 'application/json', 
+        'authorization': JSON.parse(localStorage.getItem("token"))}
+    }).then(res => res.json())
+    .then(res => console.log(res))
+}
 
 let postIngredients = (prefix, ingredients) => {
     let localStorageToken = localStorage.getItem("token");
@@ -194,9 +208,8 @@ let postIngredients = (prefix, ingredients) => {
         headers: {'Content-Type': 'application/json', 
         'authorization': parseToken}
     }).then((contents) => {
-        return contents.text();
+        return contents.json();
     }).then((results) => {
-        results = JSON.parse(results);
         displayRecipes(results);
         console.log(results);
     })
@@ -316,4 +329,10 @@ let setupEventListeners = () => {
     logoutButton.addEventListener('click', loginLogout);
 }
 
+
+
+
+let toggleSelect = event => {
+	event.target.classList.toggle("selected");
+}
 setupEventListeners();
