@@ -86,13 +86,32 @@ let loginLogout = () => {
     }
 };
 
+let loginAfterSignup = (credentials) => {
+    fetch('/tokens', {
+        method: 'POST',
+        body: credentials,
+        headers: {'Content-Type': 'application/json'}
+    }).then(results => {
+        return results.text()})
+        .then(text => {
+            localStorage.setItem("token", JSON.stringify(text))
+            displayUserEmail(credentials.email);
+            loginButtonStatus();
+        });
+};
+
 let postSignupInformation = (signupInformation) => {
     console.log(signupInformation);
     let fetchPost = fetch('/users', {
         method: 'POST',
         body: JSON.stringify(signupInformation),
         headers: {'Content-Type': 'application/json'}
-    });
+    }).then((contents) => {
+        return contents.text()})
+        .then(credentials => {
+            loginAfterSignup(credentials);
+        })
+        .catch((err) => {console.log(err)});
 };
 
 let captureUserCredentials = (prefix) => {
@@ -258,20 +277,25 @@ let showSignupContainer = () => {
     loginContainer.classList.add('hidden');
 };
 
+let clearUserInformationInput = (prefix) => {
+    let userEmail = document.querySelector('.' + prefix + '-email-input');
+    let userPassword = document.querySelector('.' + prefix + '-password-input');
+    userEmail.value = '';
+    userPassword.value = '';
+}
+
 let submitSignupInfo = (event) => {
     event.preventDefault();
     let userCredentials = captureUserCredentials('signup');
     postSignupInformation(userCredentials);
+    clearUserInformationInput('signup');
 };
 
 let submitLoginInfo = (event) => {
     event.preventDefault();
     captureUserCredentials('login');
     let credentials = captureUserCredentials('login');
-    let userEmail = document.querySelector('.login-email-input');
-    let userPassword = document.querySelector('.login-password-input');
-    userEmail.value = '';
-    userPassword.value = '';
+    clearUserInformationInput('login');
     fetch('/tokens', {
         method: 'POST',
         body: JSON.stringify(credentials),
