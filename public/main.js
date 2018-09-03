@@ -268,6 +268,10 @@ let submitSignupInfo = (event) => {
     event.preventDefault();
     let userCredentials = captureUserCredentials('signup');
     postSignupInformation(userCredentials);
+    let userEmail = document.querySelector('.signup-email-input');
+    let userPassword = document.querySelector('.signup-password-input');
+    userEmail.value = '';
+    userPassword.value = '';
 };
 
 let submitLoginInfo = (event) => {
