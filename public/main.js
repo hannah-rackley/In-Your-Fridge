@@ -170,6 +170,8 @@ let displayIngredient = function(prefix, input) {
     let output = document.querySelector('.' + prefix + '-output');
     let item = document.createElement('div');
     let deleteButton = document.createElement('input');
+    let itemsContainer = document.querySelector('.' + prefix + '-output');
+    itemsContainer.classList.remove('hidden');
     deleteButton.setAttribute('type', 'submit');
     deleteButton.setAttribute('value', 'Remove');
     deleteButton.classList.add(prefix +'-delete-button');

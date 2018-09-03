@@ -170,6 +170,20 @@ html, body {
     background-position: center;
     background-size: contain
 }
+.staples-item-output {
+    background-color: rgb(250, 240, 238);
+    width: 10em;
+    border-bottom-style: solid;
+    border-bottom-color: lightblue;
+    border-bottom-width: thin;
+}
+.extras-item-output {
+    background-color: rgb(250, 240, 238);
+    width: 10em;
+    border-bottom-style: solid;
+    border-bottom-color: lightblue;
+    border-bottom-width: thin;
+}
 .all-ingredients-container {
     display: flex;
     flex-direction: column;
@@ -226,8 +240,18 @@ html, body {
 .staples-output {
     position: relative;
     text-align: center;
+    background-color: rgb(250, 240, 238);
+    border-style: solid;
+    border-width: thick;
+    border-color: rgb(250, 240, 238);
 }
-
+.extras-output {
+    text-align: center;
+    background-color: rgb(250, 240, 238);
+    border-style: solid;
+    border-width: thick;
+    border-color: rgb(250, 240, 238);
+}
 /* Staple text appended to image */
 
 /* Bottom second text */
