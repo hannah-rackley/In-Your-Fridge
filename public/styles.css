@@ -19,7 +19,10 @@ html, body {
     padding-left: 1em;
     padding-right: 1em;
     border-width: thin;
+    background-color: rgb(77, 90, 109);
+    color: rgb(255,255,255);
 }
+
 .login-modal-container {
     display: flex;
     position: fixed;
@@ -31,6 +34,10 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-content: center;
+}
+
+.logout-button {
+    color: rgb(255,255,255);
 }
 .hidden {
     display: none;
@@ -105,13 +112,14 @@ html, body {
     text-align: center;
 }
 .recipe-photo {
-    width: 10em;
-    height: 10em;
+    width: auto;
+    height: 9em;
+    align-self: center;
     align-self: center;
 }
 .logo {
     font-family: 'Exo', sans-serif;
-    font-size: 60px;
+    font-size: 30px;
     margin: 0;
     color: #444444;
 }
@@ -189,15 +197,88 @@ html, body {
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     transition: color 0.5s linear 0s;
     cursor: pointer;
-  }
-  
-  .selected {
+}
+
+.selected {
     color: red;
-  }
+}
 
 .extras-submit, .staples-submit {
     border: 1px;
 }
+
+.recipes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+}
+
+
+.recipe {
+    background-color: rgb(204, 204, 203);
+    width: 70%;
+    height: 30;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #def5ff;
+    box-shadow: 10px 10px 5px grey;
+    border-radius: 8px;
+    margin-bottom: 17px;
+}
+
+
+
+.open-fridge {
+    height: 460px;
+    width: auto;
+}
+
+.staples-output {
+    position: relative;
+    text-align: center;
+}
+
+/* Staple text appended to image */
+
+/* Bottom second text */
+.bottom-second {
+    position: absolute;
+    bottom: 193px;
+    left: 73px;;
+}
+
+/* Top text */
+.top {
+    position: absolute;
+    top: 103px;
+    left: 78px;
+}
+
+/* Top second text */
+.top-second {
+    position: absolute;
+    top: 153px;
+    right: 164px;
+}
+
+/* Bottom text */
+.bottom {
+    position: absolute;
+    bottom: 120px;
+    right: 138px
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 46%;
+    left: 37%;
+    transform: translate(-50%, -50%);
+}
+
 
 .input-labels {
     padding-bottom: 10px;
@@ -207,5 +288,19 @@ html, body {
 @media only screen and (min-width: 768px) {
     .login-email {
         padding-left: 6%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .recipe-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }   
+
+    .recipe {
+        width: 37%;
+        height: 445px
     }
 }
