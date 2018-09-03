@@ -93,6 +93,7 @@ let loginLogout = () => {
         while (staplesOutput.firstChild) {
             staplesOutput.removeChild(staplesOutput.firstChild);
         }
+        staplesOutput.classList.add('hidden');
         logoutButton.textContent = 'Log In';
     } else if (logoutButton.textContent === 'Log In') {
         document.querySelector('.view-saved')
