@@ -86,13 +86,32 @@ let loginLogout = () => {
     }
 };
 
+let loginAfterSignup = (credentials) => {
+    fetch('/tokens', {
+        method: 'POST',
+        body: credentials,
+        headers: {'Content-Type': 'application/json'}
+    }).then(results => {
+        return results.text()})
+        .then(text => {
+            localStorage.setItem("token", JSON.stringify(text))
+            displayUserEmail(credentials.email);
+            loginButtonStatus();
+        });
+};
+
 let postSignupInformation = (signupInformation) => {
     console.log(signupInformation);
     let fetchPost = fetch('/users', {
         method: 'POST',
         body: JSON.stringify(signupInformation),
         headers: {'Content-Type': 'application/json'}
-    });
+    }).then((contents) => {
+        return contents.text()})
+        .then(credentials => {
+            loginAfterSignup(credentials);
+        })
+        .catch((err) => {console.log(err)});
 };
 
 let captureUserCredentials = (prefix) => {
