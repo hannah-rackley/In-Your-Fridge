@@ -1,7 +1,9 @@
 * {
     box-sizing: border-box;
 }
-
+.spacer {
+    flex-grow: 1;
+}
 html, body {
     width: 100%;
     height: 100%;
@@ -10,8 +12,18 @@ html, body {
     background-color: rgb(132, 129, 192);
     font-family: 'Exo', sans-serif;
 }
-.navigation-menu {
-    border-style: solid;
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigation-user-email {
+    padding-right: 1em;
+}
+/* .navigation-menu { */
+    /* border-style: solid;
     display: flex;
     justify-content: space-between;
     height: 2.5em;
@@ -20,8 +32,8 @@ html, body {
     padding-right: 1em;
     border-width: thin;
     background-color: rgb(77, 90, 109);
-    color: rgb(255,255,255);
-}
+    color: rgb(255,255,255); */
+/* } */
 
 .login-modal-container {
     display: flex;
@@ -36,9 +48,9 @@ html, body {
     align-content: center;
 }
 
-.logout-button {
+/* .logout-button {
     color: rgb(255,255,255);
-}
+} */
 .hidden {
     display: none;
 }
@@ -60,10 +72,6 @@ html, body {
     margin-bottom: 0;
 }
 
-.modal-body {
-    display: flex;
-    flex-direction: column;
-}
 .wrong-password {
     border: 1px solid red;
     color: red;
@@ -187,6 +195,14 @@ html, body {
     background-position: center;
     background-size: contain
 }
+
+.edit-staples {
+    margin: 0.3em;
+}
+
+.edit-extras {
+    margin: 0.3em;
+}
 .all-ingredients-container {
     display: flex;
     flex-direction: column;
@@ -289,6 +305,11 @@ html, body {
     font-size: 0.9rem;
 }
 /* styling for tablets */
+@media (max-width: 420px) {
+    .spacer {
+        display: none;
+    }
+}
 @media only screen and (min-width: 768px) {
     .login-email {
         padding-left: 6%;

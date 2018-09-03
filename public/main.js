@@ -9,8 +9,7 @@ let displayUserEmail = () => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
-    let userEmail = document.createElement('p');
-    userEmail.classList.add('navigation-user-email')
+    let userEmail = document.querySelector('.navigation-user-email')
     let fetchGet = fetch('/retrieveemail', {
         method: 'GET',
         headers: {'authorization': parseToken}
@@ -197,12 +196,16 @@ let getExtraInput = (event) => {
 };
 
 let displayRecipes = (recipes, boolean) => {
-    let recipesContainer = document.querySelector('.modal-body');
+    let recipesContainer;
+    if (boolean === true) {
+        recipesContainer = document.querySelector('.modal-body');
+    } else {
+        recipesContainer = document.querySelector('.recipes-container');
+    }
     while (recipesContainer.firstChild) {
         recipesContainer.removeChild(recipesContainer.firstChild);
         }
     recipes.forEach(item => {
-        let recipesContainer = document.querySelector('.modal-body');
         let recipeHeart = document.createElement('h1');
         let recipe = document.createElement('div');
         let recipeName = document.createElement('p');
@@ -248,7 +251,7 @@ let likeRecipe = (id) => {
         headers: {'Content-Type': 'application/json', 
         'authorization': JSON.parse(localStorage.getItem("token"))}
     }).then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => console.log(res));
 }
 
 let showLikedRecipes = () => 
