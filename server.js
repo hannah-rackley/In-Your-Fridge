@@ -6,7 +6,6 @@ const dbConfig = name;
 const db = pg(dbConfig);
 const fs = require('fs');
 const fetch = require('node-fetch');
-let newRecipes = [];
 
 //Create token
 let createToken = user => {
@@ -78,7 +77,7 @@ let orderedByTime = (recipeArr) => {
     return(recipeArr);
 };
 
-let getRecipeInfo = function(recipeArrIds, res) {
+let getRecipeInfo = function(recipeArrIds) {
     let prefixUrl = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/informationBulk?ids=';
     let suffixUrl = '&includeNutrition=false';
     let ingreRootUrl = recipeArrIds.join("%2C");
@@ -90,11 +89,13 @@ let getRecipeInfo = function(recipeArrIds, res) {
         }
     })
         .then(function (result) {
+            console.log(result);
             let promiseRecipes = result.json();
             return promiseRecipes;
         })
         .then(function(recipeObjArr) {
-            newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes, recipe.id]);
+            console.log(recipeObjArr);
+            let newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes, recipe.id]);
             return JSON.stringify(newRecipes);
         })
         .catch(function (err) {
@@ -110,35 +111,40 @@ let getRecipesfromIngreds = (req, res) => {
     res.header("Access-Control-Allow-Methods", "*");
     readBody(req, (body) => {
         let foodArr = JSON.parse(body);
-        let prefixUrl =
-        "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
-        let suffixUrl = "&limitLicense=false&number=5&ranking=2"
-        let ingreRootUrl = foodArr.join("%2C");
-        fetch(prefixUrl + ingreRootUrl + suffixUrl, {
-            method: "GET",
-            headers: {
-                "X-Mashape-Key": recipeKey,
-                Accept: 'application/json'
-            }
-        })
-            .then(function (result) {
-                let promiseRecipes = result.json();
-                return promiseRecipes;
-            })
-        .then(function(recipeObjArr) {
-            let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
-            getRecipeInfo(recipeArrIds, res)
-            .then((results) => {
-                results = JSON.parse(results);
-                results = orderedByTime(results);
-                res.send(JSON.stringify(results))})
-            .catch(err => console.log(err));
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
+        getRecipes(foodArr, res);
     });
 }
+
+let getRecipes = (foodArr, res) => {
+    console.log(foodArr);
+    let prefixUrl =
+    "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
+    let suffixUrl = "&limitLicense=false&number=5&ranking=2"
+    let ingreRootUrl = foodArr.join("%2C");
+    fetch(prefixUrl + ingreRootUrl + suffixUrl, {
+        method: "GET",
+        headers: {
+            "X-Mashape-Key": recipeKey,
+            Accept: 'application/json'
+        }
+    })
+        .then(function (result) {
+            let promiseRecipes = result.json();
+            return promiseRecipes;
+        })
+    .then(function(recipeObjArr) {
+        let recipeArrIds = recipeObjArr.map(recipes => recipes.id);
+        getRecipeInfo(recipeArrIds, res)
+        .then((results) => {
+            results = JSON.parse(results);
+            results = orderedByTime(results);
+            res.send(JSON.stringify(results))})
+        .catch(err => console.log(err));
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+};
 
 let postUserSignupInformation = (req, res) => {
     readBody(req, (body) => {
@@ -225,9 +231,22 @@ let saveLikedRecipes = (req, res) => {
     })
 }
 
+let loadFavorites = (req, res) => {
+    db.query (`
+        SELECT recipeId 
+        FROM liked 
+        WHERE userId = $1
+        AND liked = true;
+        `, req.jwt.userId)
+    .then(recipes => recipes.map(recipe => recipe.recipeid))
+    .then(recipeids => getRecipeInfo(recipeids))
+    .then(recipes => res.send(recipes))
+}
+
 let server = express();
 server.use(express.static('./public'))
 server.get('/retrieveemail', checkToken, returnEmail);
+server.get('/favorites', checkToken, loadFavorites);
 server.get('/retrieveingredients', checkToken, getStaples);
 server.post('/tokens', postToken);
 server.post('/users', postUserSignupInformation);
