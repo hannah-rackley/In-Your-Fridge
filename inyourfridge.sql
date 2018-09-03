@@ -17,6 +17,15 @@ CREATE TABLE recipes(
     disliked text[]
 );
 
+CREATE TABLE liked(
+    id serial PRIMARY KEY NOT NULL,
+    userId integer NOT NULL,
+    recipeId integer NOT NULL,
+    liked boolean
+);
+ALTER TABLE liked
+  ADD CONSTRAINT userRecipe UNIQUE(userId, recipeId);
+
 CREATE TABLE ingredients(
     userId integer NOT NULL,
     included text[],

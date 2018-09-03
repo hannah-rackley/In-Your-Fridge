@@ -171,6 +171,16 @@ html, body {
     padding: 0 10%;
 }
 
+.heart {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    transition: color 0.5s linear 0s;
+    cursor: pointer;
+  }
+  
+  .selected {
+    color: red;
+  }
 
 .extras-submit, .staples-submit {
     border: 1px;
