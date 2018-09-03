@@ -75,6 +75,12 @@ let loginButtonStatus = () => {
 
 loginButtonStatus();
 
+let clearDisplayContainers = (container) => {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+};
+
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
@@ -90,10 +96,8 @@ let loginLogout = () => {
         }
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
-        while (staplesOutput.firstChild) {
-            staplesOutput.removeChild(staplesOutput.firstChild);
-        }
-        logoutButton.textContent = 'Log In';
+        clearDisplayContainers(staplesOutput);
+        clearDisplayContainers(savedRecipes);
     } else if (logoutButton.textContent === 'Log In') {
         document.querySelector('.view-saved')
         .classList.add('hidden');
