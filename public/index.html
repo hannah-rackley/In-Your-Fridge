@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Modak" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
     <nav class="navigation-menu">
@@ -15,9 +16,7 @@
         <div class="navigation-user-email-container">
         </div>
         <div class="user-saved-recipes">
-        </div>
-        <div>
-            <p class='view-saved' type='submit'>♥ recipes</p> 
+            <button type='submit' class='view-saved btn btn-primary btn-lg' data-toggle="modal" data-target="#favoritesModal">♥ recipes</button> 
         </div>
         <button type="button" class="logout-button">Log Out</button>
     </nav>
@@ -78,6 +77,21 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="favoritesModal" tabindex="-1" role="dialog" aria-labeledby="favoritesModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="all-ingredients-container">
         <h1 class="logo"> in your fridge </h1>
         <div class="ingredient-container">            
@@ -116,5 +130,7 @@
     <div class="recipes-container">
     </div>
     <script src="main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

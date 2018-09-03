@@ -197,12 +197,12 @@ let getExtraInput = (event) => {
 };
 
 let displayRecipes = (recipes, boolean) => {
-    let recipesContainer = document.querySelector('.recipes-container');
+    let recipesContainer = document.querySelector('.modal-body');
     while (recipesContainer.firstChild) {
         recipesContainer.removeChild(recipesContainer.firstChild);
         }
     recipes.forEach(item => {
-        let recipesContainer = document.querySelector('.recipes-container');
+        let recipesContainer = document.querySelector('.modal-body');
         let recipeHeart = document.createElement('h1');
         let recipe = document.createElement('div');
         let recipeName = document.createElement('p');
@@ -230,7 +230,7 @@ let displayRecipes = (recipes, boolean) => {
         recipeHeart.addEventListener('click',() => likeRecipe(item[4]));
         recipesContainer.appendChild(recipe);
         if (boolean === true) {
-            recipeHeart.classList.toggle("selected")
+            recipeHeart.classList.add("selected")
         } 
     });
 };
