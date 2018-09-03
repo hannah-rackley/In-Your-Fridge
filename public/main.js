@@ -75,10 +75,17 @@ let loginButtonStatus = () => {
 
 loginButtonStatus();
 
+let clearDisplayContainers = (container) => {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+};
+
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
     let staplesOutput = document.querySelector('.staples-output');
+    let extrasOutput = document.querySelector('.extras-output');
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
     let userEmail = document.querySelector('.navigation-user-email')
     let savedRecipes = document.querySelector('.recipes-container')
@@ -90,11 +97,11 @@ let loginLogout = () => {
         }
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
-        while (staplesOutput.firstChild) {
-            staplesOutput.removeChild(staplesOutput.firstChild);
-        }
         staplesOutput.classList.add('hidden');
+        extrasOutput.classList.add('hidden');
         logoutButton.textContent = 'Log In';
+        clearDisplayContainers(staplesOutput);
+        clearDisplayContainers(savedRecipes);
     } else if (logoutButton.textContent === 'Log In') {
         document.querySelector('.view-saved')
         .classList.add('hidden');
@@ -344,6 +351,10 @@ let submitLoginInfo = (event) => {
     captureUserCredentials('login');
     let credentials = captureUserCredentials('login');
     clearUserInformationInput('login');
+    let wrongPass = document.querySelector('.wrong-password');
+    wrongPass.classList.add('hidden');
+    let wrongUser = document.querySelector('.wrong-login-info');
+    wrongUser.classList.add('hidden');
     fetch('/tokens', {
         method: 'POST',
         body: JSON.stringify(credentials),
@@ -351,14 +362,27 @@ let submitLoginInfo = (event) => {
     }).then(results => {
         return results.text()})
         .then(text => {
-            localStorage.setItem("token", JSON.stringify(text))
-            getStaples();
-            displayUserEmail(credentials.email);
-            document.querySelector('.view-saved')
-              .classList.remove('hidden');
-            loginButtonStatus();
-            document.querySelector('.view-saved')
-            .classList.remove('hidden');
+            if (text === "Wrong login information") {
+                clearUserInformationInput('login');
+                let wrongUser = document.querySelector('.wrong-login-info');
+                wrongUser.classList.remove('hidden');
+                let loginContainer = document.querySelector('.login-modal-container');
+                loginContainer.classList.remove('hidden');
+            } else if (text === "Wrong password") {
+                clearUserInformationInput('login');
+                let loginContainer = document.querySelector('.login-modal-container');
+                loginContainer.classList.remove('hidden');
+                let wrongPass = document.querySelector('.wrong-password');
+                wrongPass.classList.remove('hidden');
+            } else {
+                localStorage.setItem("token", JSON.stringify(text))
+                getStaples();
+                displayUserEmail(credentials.email);
+                document.querySelector('.view-saved')
+                .classList.remove('hidden');
+                loginButtonStatus();
+            }
+
         });
 };
 

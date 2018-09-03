@@ -38,12 +38,13 @@ let postToken = async (req, res) => {
                 if (user.password === password && user.email === email) {
                     let token = createToken(user);
                     res.send(token);
-                    //later we will add in the ability to store this token in the users local storage
                 } else {
-                    res.send('Uh-oh! I cannot assign a token for you!');
+                    res.send("Wrong password");
                 }
             })
-            .catch((err) => {console.log(err)});
+            .catch((err) => {
+                res.send("Wrong login information");
+                console.log(err)});
     });
 }
 

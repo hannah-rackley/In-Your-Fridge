@@ -59,6 +59,19 @@ html, body {
     margin: 0.4em;
     margin-bottom: 0;
 }
+
+.wrong-password {
+    border: 1px solid red;
+    color: red;
+    padding: 4px;
+}
+
+.wrong-login-info {
+    border: 1px solid red;
+    color: red;
+    padding: 4px;
+}
+
 .login-form {
     display: flex;
     flex-direction: column;
@@ -238,7 +251,7 @@ html, body {
 }
 
 .staples-output {
-    position: relative;
+    /* position: relative; */
     text-align: center;
     background-color: rgb(250, 240, 238);
     border-style: solid;
