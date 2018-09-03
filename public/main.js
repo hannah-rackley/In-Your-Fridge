@@ -232,9 +232,6 @@ let likeRecipe = (id) => {
     .then(res => console.log(res))
 }
 
-let showRecipesInNav = document.querySelector('.view-saved');
-showRecipesInNav.addEventListener('click', () => showLikedRecipes());
-
 let showLikedRecipes = () => 
     fetch('/favorites', { 
         method: 'GET',
@@ -380,7 +377,10 @@ let setupEventListeners = () => {
     editExtras.addEventListener('click', showDeleteButtons);
 
     let logoutButton = document.querySelector('.logout-button');
-    logoutButton.addEventListener('click', loginLogout);
-}
+    logoutButton.addEventListener('click', loginLogout); 
+    
+    let showRecipesInNav = document.querySelector('.view-saved');
+    showRecipesInNav.addEventListener('click', () => showLikedRecipes());
+    }
 
 setupEventListeners();
