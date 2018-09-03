@@ -68,7 +68,6 @@ let loginButtonStatus = () => {
     }
     else if (checkToken !== null) {
         logoutButton.textContent = 'Log Out';
-        savedRecipes.removeChild(savedRecipes.firstChild);
         document.querySelector('.view-saved')
         .classList.remove('hidden');
     }
@@ -86,7 +85,9 @@ let loginLogout = () => {
     if (logoutButton.textContent === 'Log Out') {
         document.querySelector('.view-saved')
         .classList.add('hidden');
-        savedRecipes.removeChild(savedRecipes.firstChild);
+        while (savedRecipes.firstChild) {
+            savedRecipes.removeChild(savedRecipes.firstChild);
+        }
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
         while (staplesOutput.firstChild) {
