@@ -14,7 +14,7 @@ let displayUserEmail = () => {
     let fetchGet = fetch('/retrieveemail', {
         method: 'GET',
         headers: {'authorization': parseToken}
-    }).then(contents => {
+    }).then(contents => {   
         return contents.text()})
         .then(text => {
             let parsedText = JSON.parse(text);
@@ -25,6 +25,7 @@ let displayUserEmail = () => {
 };
 
 let getStaples = () => {
+    // let fridgePosition = ['bottom-second', 'bottom', 'top', 'top-second', 'centered']
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
     let fetchGet = fetch('/retrieveingredients', {
@@ -35,7 +36,9 @@ let getStaples = () => {
         .then(text => {
             let ingredientsArray = JSON.parse(text);
             ingredientsArray.forEach(item => {
+            // let positionForStaple = fridgePosition[Math.floor(Math.random() * fridgePosition.length)]
                 displayIngredient('staples', item);
+                // displayIngredient('staples', item, positionForStaple);
             })
         });
 };
@@ -57,11 +60,17 @@ token = getToken();
 let loginButtonStatus = () => {
     let checkToken = localStorage.getItem("token");
     let logoutButton = document.querySelector('.logout-button');
+    let savedRecipes = document.querySelector('.recipes-container')
     if (checkToken === null) {
         logoutButton.textContent = 'Log In';
+        document.querySelector('.view-saved')
+          .classList.add('hidden');
     }
     else if (checkToken !== null) {
         logoutButton.textContent = 'Log Out';
+        savedRecipes.removeChild(savedRecipes.firstChild);
+        document.querySelector('.view-saved')
+        .classList.remove('hidden');
     }
 };
 
@@ -73,7 +82,11 @@ let loginLogout = () => {
     let staplesOutput = document.querySelector('.staples-output');
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
     let userEmail = document.querySelector('.navigation-user-email')
+    let savedRecipes = document.querySelector('.recipes-container')
     if (logoutButton.textContent === 'Log Out') {
+        document.querySelector('.view-saved')
+        .classList.add('hidden');
+        savedRecipes.removeChild(savedRecipes.firstChild);
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
         while (staplesOutput.firstChild) {
@@ -81,6 +94,8 @@ let loginLogout = () => {
         }
         logoutButton.textContent = 'Log In';
     } else if (logoutButton.textContent === 'Log In') {
+        document.querySelector('.view-saved')
+        .classList.add('hidden');
         console.log('log in');
         loginModalWindow.classList.remove('hidden');
     }
@@ -130,7 +145,7 @@ let deleteStaple = (event) => {
     var parent = deleteButton.parentElement;
     parent.parentNode.removeChild(parent);
 }
-
+// let displayIngredient = function(prefix, input, positionForStaple)
 let displayIngredient = function(prefix, input) {
     let output = document.querySelector('.' + prefix + '-output');
     let item = document.createElement('div');
@@ -143,6 +158,7 @@ let displayIngredient = function(prefix, input) {
     item.textContent = input;
     item.appendChild(deleteButton);
     item.classList.add(prefix + '-item-output');
+    // item.classList.add(positionForStaple);
     output.appendChild(item);
 }
 
@@ -160,12 +176,17 @@ let getExtraInput = (event) => {
     extraInput.value = "";
 };
 
-let displayRecipes = (recipes) => {
+let displayRecipes = (recipes, boolean) => {
+    let recipesContainer = document.querySelector('.recipes-container');
+    while (recipesContainer.firstChild) {
+        recipesContainer.removeChild(recipesContainer.firstChild);
+        }
     recipes.forEach(item => {
         let recipesContainer = document.querySelector('.recipes-container');
         let recipeHeart = document.createElement('h1');
         let recipe = document.createElement('div');
         let recipeName = document.createElement('p');
+        let recipeTime = document.createElement('p');
         let recipeURL = document.createElement('a');
         let recipePhoto = document.createElement('img');
         recipe.classList.add('recipe');
@@ -173,20 +194,31 @@ let displayRecipes = (recipes) => {
         recipeName.classList.add('recipe-name');
         recipePhoto.classList.add('recipe-photo');
         recipeURL.classList.add('recipe-url');
+        recipeTime.textContent = ` ${item[3]} Minutes`
         recipeName.textContent = item[0];
         recipePhoto.setAttribute('src', item[2]);
         recipeHeart.setAttribute('class', 'heart')
+        recipeTime.setAttribute('class', 'recipe-time')
         recipeURL.setAttribute('href', item[1]);
         recipeURL.setAttribute('target', '_blank');
         recipeURL.setAttribute('rel', 'noopener noreferrer');
-        recipeURL.appendChild(recipeName);
         recipeURL.appendChild(recipePhoto);
+        recipe.appendChild(recipeTime);
+        recipe.appendChild(recipeName);
         recipe.appendChild(recipeURL);
         recipe.appendChild(recipeHeart);
         recipeHeart.addEventListener('click',() => likeRecipe(item[4]));
         recipesContainer.appendChild(recipe);
+        if (boolean === true) {
+            recipeHeart.classList.toggle("selected")
+        } 
     });
 };
+
+// let turnHeartRed = () => {
+//     let heart = document.querySelector('.heart')
+//     heart.classList.toggle("selected")
+// }
 
 let likeRecipe = (id) => {
     event.target.classList.toggle("selected");
@@ -199,6 +231,19 @@ let likeRecipe = (id) => {
     .then(res => console.log(res))
 }
 
+let showRecipesInNav = document.querySelector('.view-saved');
+showRecipesInNav.addEventListener('click', () => showLikedRecipes());
+
+let showLikedRecipes = () => 
+    fetch('/favorites', { 
+        method: 'GET',
+        headers: {
+            'authorization': JSON.parse(localStorage.getItem("token")),
+            'Content-Type': 'application/json'
+        }
+    }).then(data => data.json())
+    .then(data => displayRecipes(data, true))
+
 let postIngredients = (prefix, ingredients) => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
@@ -210,7 +255,7 @@ let postIngredients = (prefix, ingredients) => {
     }).then((contents) => {
         return contents.json();
     }).then((results) => {
-        displayRecipes(results);
+        displayRecipes(results, false);
         console.log(results);
     })
 }
@@ -256,6 +301,8 @@ let showSignupContainer = () => {
     let loginContainer = document.querySelector('.login-input-container');
     signupContainer.classList.remove('hidden');
     loginContainer.classList.add('hidden');
+    document.querySelector('.view-saved')
+            .classList.add('hidden');
 };
 
 let submitSignupInfo = (event) => {
@@ -282,7 +329,11 @@ let submitLoginInfo = (event) => {
             localStorage.setItem("token", JSON.stringify(text))
             getStaples();
             displayUserEmail(credentials.email);
+            document.querySelector('.view-saved')
+              .classList.remove('hidden');
             loginButtonStatus();
+            document.querySelector('.view-saved')
+            .classList.remove('hidden');
         });
 };
 
@@ -292,6 +343,8 @@ let backToLogin = (event) => {
     let loginContainer = document.querySelector('.login-input-container');
     signupContainer.classList.add('hidden');
     loginContainer.classList.remove('hidden');
+    document.querySelector('.view-saved')
+            .classList.add('hidden');
 };
 
 let setupEventListeners = () => {
@@ -329,10 +382,4 @@ let setupEventListeners = () => {
     logoutButton.addEventListener('click', loginLogout);
 }
 
-
-
-
-let toggleSelect = event => {
-	event.target.classList.toggle("selected");
-}
 setupEventListeners();
