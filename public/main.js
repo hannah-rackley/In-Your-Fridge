@@ -59,13 +59,14 @@ token = getToken();
 let loginButtonStatus = () => {
     let checkToken = localStorage.getItem("token");
     let logoutButton = document.querySelector('.logout-button');
-    let savedRecipes = document.querySelector('.recipes-container')
+    let fridgeImage = document.querySelector('.fridge');
     if (checkToken === null) {
         logoutButton.textContent = 'Log In';
         document.querySelector('.view-saved')
           .classList.add('hidden');
     }
     else if (checkToken !== null) {
+        fridgeImage.setAttribute('src', './fridge-open.jpg');
         logoutButton.textContent = 'Log Out';
         document.querySelector('.view-saved')
         .classList.remove('hidden');
@@ -74,29 +75,28 @@ let loginButtonStatus = () => {
 
 loginButtonStatus();
 
+let clearDisplayContainers = (container) => {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+};
+
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
     let staplesOutput = document.querySelector('.staples-output');
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
     let userEmail = document.querySelector('.navigation-user-email')
-    let savedRecipes = document.querySelector('.recipes-container')
+    let extrasOutput = document.querySelector('.extras-output');
+    let recipes = document.querySelector('.recipes-container');
     if (logoutButton.textContent === 'Log Out') {
-        document.querySelector('.view-saved')
-        .classList.add('hidden');
-        while (savedRecipes.firstChild) {
-            savedRecipes.removeChild(savedRecipes.firstChild);
-        }
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
-        while (staplesOutput.firstChild) {
-            staplesOutput.removeChild(staplesOutput.firstChild);
-        }
-        logoutButton.textContent = 'Log In';
+        clearDisplayContainers(staplesOutput);
+        clearDisplayContainers(extrasOutput);
+        clearDisplayContainers(recipes);
+        loginButtonStatus();
     } else if (logoutButton.textContent === 'Log In') {
-        document.querySelector('.view-saved')
-        .classList.add('hidden');
-        console.log('log in');
         loginModalWindow.classList.remove('hidden');
     }
 };
@@ -141,24 +141,6 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
-// let showDeleteButtons = (event) => {
-//     event.preventDefault();
-//     let deleteButtons;
-//     if (event.target.value === 'extras') {
-//         deleteButtons = document.querySelectorAll('.extras-delete-button');
-//     } else if (event.target.value === 'staples') {
-//         deleteButtons = document.querySelectorAll('.staples-delete-button');
-//     }
-//     deleteButtons.forEach((button) => {
-//         button.classList.toggle('hidden');
-//     });
-//     if (event.target.textContent === 'Edit') {
-//         event.target.textContent = 'Done!';
-//     } else if (event.target.textContent === 'Done!') {
-//         event.target.textContent = 'Edit';
-//     }
-// }
-
 let deleteIngredient = (event) => {
     var deleteButton = event.target;
     var parent = deleteButton.parentElement;
@@ -168,12 +150,14 @@ let deleteIngredient = (event) => {
 let displayIngredient = function(prefix, input) {
     let output = document.querySelector('.' + prefix + '-output');
     let item = document.createElement('div');
-    let deleteButton = document.createElement('input');
+    let text = document.createElement('p');
+    let deleteButton = document.createElement('button');
     deleteButton.setAttribute('type', 'submit');
-    deleteButton.setAttribute('value', 'x');
-    deleteButton.classList.add(prefix +'-delete-button');
+    deleteButton.textContent = 'x';
+    deleteButton.classList.add(prefix +'-delete-button', 'btn', 'btn-danger');
     deleteButton.addEventListener('click', deleteIngredient);
-    item.textContent = input;
+    text.textContent = input;
+    item.appendChild(text);
     item.appendChild(deleteButton);
     item.classList.add(prefix + '-item-output');
     // item.classList.add(positionForStaple);
@@ -306,15 +290,6 @@ let getConfirmedIngredients = (event) => {
     return allIngredients;
 }
 
-// let recipeExamples = [
-//     ["Apple Fritters", "https://spoonacular.com/apple-fritters-556470", "https://spoonacular.com/recipeImages/556470-556x370.jpg"], 
-//     ["Cinnamon Apple Crisp", "https://spoonacular.com/cinnamon-apple-crisp-47950", "https://spoonacular.com/recipeImages/47950-556x730.jpg"], 
-//     ["Brown Butter Apple Crumble", "https://spoonacular.com/brown-butter-apple-crumble-534573", "https://spoonacular.com/recipeImages/534573-556x370.jpg"], 
-//     ["Apple Tart", "https://spoonacular.com/apple-tart-47732", "https://spoonacular.com/recipeImages/47732-556x370.jpg"], 
-//     ["Apple Tart", "https://spoonacular.com/apple-tart-47891", "https://spoonacular.com/recipeImages/47891-556x370.jpg"]
-// ];
-// displayRecipes(recipeExamples);
-
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');
     let loginContainer = document.querySelector('.login-input-container');
@@ -418,6 +393,6 @@ let setupEventListeners = () => {
     
     let showRecipesInNav = document.querySelector('.view-saved');
     showRecipesInNav.addEventListener('click', () => showLikedRecipes());
-    }
+}
 
 setupEventListeners();

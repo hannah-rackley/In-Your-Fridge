@@ -184,7 +184,8 @@ html, body {
     width: 10em;
     align-self: center;
 }
-.staples-container {
+
+/* .staples-container {
     margin-top: -90px;
     padding-top: 0;
     width: 100%;
@@ -193,22 +194,47 @@ html, body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain
-}
+} */
 
-.edit-staples {
+/* .edit-staples {
     margin: 0.3em;
-}
+} */
 
-.edit-extras {
+/* .edit-extras {
     margin: 0.3em;
-}
+} */
 .all-ingredients-container {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
+    /* align-items: center;
+    padding: 0 10%; */
+}
+
+.staples-output, .extras-output {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 1em;
+    padding-left: 1em;
+}
+
+.staples-item-output, .extras-item-output {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    padding: 0 10%;
+    justify-content: space-between;
+    border-bottom: 1px solid lightblue;
+}
+
+.ingredients-header {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-bottom: 3px solid lightblue;
+    margin-bottom: 0;
+    padding-left: 0.5em;
 }
 
 .heart {
@@ -220,10 +246,6 @@ html, body {
 
 .selected {
     color: red;
-}
-
-.extras-submit, .staples-submit {
-    border: 1px;
 }
 
 .recipes-container {
@@ -254,8 +276,8 @@ html, body {
     justify-content: space-around;
 }
 
-.open-fridge {
-    height: 460px;
+.fridge {
+    height: 550px;
     width: auto;
     /* display: none; */
 }
@@ -303,17 +325,37 @@ html, body {
     transform: translate(-50%, -50%);
 }
 
-
 .input-labels {
     padding-bottom: 10px;
     font-size: 0.9rem;
 }
+
+.staples-input, .extras-input {
+    width: 83%;
+    margin-right: 0;
+}
+
+.white {
+    color: white;
+}
+
 /* styling for tablets */
 @media (max-width: 420px) {
     .spacer {
         display: none;
     }
 }
+
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    .fridge {
+        max-width: 445px;
+    }
+}
+
 @media only screen and (min-width: 768px) {
     .login-email {
         padding-left: 6%;
@@ -329,7 +371,6 @@ html, body {
     }   
 
     .recipe {
-        width: 37%;
         height: 445px
     }
 }
