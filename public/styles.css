@@ -347,6 +347,9 @@ html, body {
     .spacer {
         display: none;
     }
+    .staples-input, .extras-input {
+        width: 75%;
+    }
 }
 
 @media (max-width: 768px) {
