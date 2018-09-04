@@ -5,21 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>in your fridge</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Modak" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 </head>
 <body>
-    <nav class="navigation-menu">
-        Welcome
-        <div class="navigation-user-email-container">
-        </div>
+    <nav class="navbar navbar-light" style="background-color: rgb(209, 235, 241)">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <p>in your fridge</p>
+                <!-- <img alt="Brand" src="/fridge-closed-small.jpg"> -->
+            </a>
         <div class="user-saved-recipes">
+            <button type='submit' class='view-saved btn btn-light' data-toggle="modal" data-target="#favoritesModal">♥ recipes</button> 
         </div>
-        <div>
-            <p class='view-saved' type='submit'>♥ recipes</p> 
+        <div class="spacer"></div>
+        <div class="navigation-user-email-container">
+            <p class="navbar-text navigation-user-email"></p>
         </div>
-        <button type="button" class="logout-button">Log Out</button>
+        <button type="button" class="logout-button btn btn-light">Log Out</button>
     </nav>
     <div class="login-modal-container">
         <div class="login-main-container">
@@ -41,13 +46,13 @@
                         Password
                         <input type="password" class="login-password-input" required />
                     </label>
-                    <button type="submit" class="login-submit-button">Log In</button>
+                    <button type="submit" class="login-submit-button btn btn-light">Log In</button>
                 </form>
                 <div class="signup-window-button-container">
                     <p class="signup-header">
-                            Are you new to in your fridge? Sign up and create an account!
+                        Are you new to in your fridge? Sign up and create an account!
                     </p>
-                    <button type="button" class="signup-window-button">Sign Up</button>
+                    <button type="button" class="signup-window-button btn btn-light">Sign Up</button>
                 </div>
             </div>
             <div class="signup-modal-container hidden">
@@ -57,14 +62,14 @@
                             Create an account below
                         </h3>
                         <label class="signup-email">
-                            Email
+                            <p>Email</p>
                             <input type="email" class="signup-email-input" value="" required />
                         </label>
                         <label class="signup-password">
-                            Password
+                            <p>Password</p>
                             <input type="password" class="signup-password-input" required />
                         </label>
-                        <button type="submit" class="signup-submit-button">Sign Up</button>
+                        <button type="submit" class="signup-submit-button btn btn-light">Sign Up</button>
                     </form>
                 </div>
                 <div class="back-to-login-window-container">
@@ -73,20 +78,35 @@
                         <br>
                         <span>Click the log in button below</span>
                     </h3>
-                    <button type="click" class="back-to-login-button">Log In</button>
+                    <button type="click" class="back-to-login-button btn btn-light">Log In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="favoritesModal" tabindex="-1" role="dialog" aria-labeledby="favoritesModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">♥ recipes</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="all-ingredients-container">
-        <h1 class="logo"> in your fridge </h1>
+        <!-- <h1 class="logo"> in your fridge </h1> -->
         <div class="ingredient-container">            
                 <form class="staples-form">
                     <label>
                         <div class="input-labels">
                             <span>Enter an ingredient item you keep as a staple</span> <br>
                             <input class="staples-input" placeholder="ex) bread"/>
-                            <button class="staples-submit" type="submit">Submit item</button>
+                            <button class="staples-submit btn btn-light btn-sm" type="submit">Submit item</button>
                         </div>
                     </label>
                 </form>
@@ -97,24 +117,27 @@
                     <div class="input-labels">
                         <span>Enter an extra ingredient that you have on hand, that isn't a staple</span><br>
                         <input class="extras-input" placeholder="ex) chicken"/>
-                        <button class="extras-submit" type="submit">Submit item</button>
+                        <button class="extras-submit btn btn-light btn-sm" type="submit">Submit item</button>
                     </div>
                 </label>
             </form>
         </div>  
         <div class="staples-output">
-            <!-- <img class="open-fridge" src='./fridge-open.jpg'/> -->
+            <img class="open-fridge" src='./fridge-open.jpg'/>
         </div>
-        <button class='edit-staples' value='staples'>Edit</button>
+        <button class='edit-staples btn btn-light' value='staples'>Edit</button>
         <div class="extras-output">
         </div>
-        <button class='edit-extras' value='extras'>Edit</button>
+        <button class='edit-extras btn btn-light' value='extras'>Edit</button>
         <div>
-            <button class='confirm-ingredients' type='submit'>Confirm Ingredients!</button>
+            <button class='confirm-ingredients btn btn-light' type='submit'>Confirm Ingredients!</button>
         </div>
     </div>
     <div class="recipes-container">
     </div>
     <script src="main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>

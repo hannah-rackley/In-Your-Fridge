@@ -90,12 +90,10 @@ let getRecipeInfo = function(recipeArrIds) {
         }
     })
         .then(function (result) {
-            console.log(result);
             let promiseRecipes = result.json();
             return promiseRecipes;
         })
         .then(function(recipeObjArr) {
-            console.log(recipeObjArr);
             let newRecipes = recipeObjArr.map(recipe => [recipe.title, recipe.spoonacularSourceUrl, recipe.image, recipe.readyInMinutes, recipe.id]);
             return JSON.stringify(newRecipes);
         })
@@ -117,7 +115,6 @@ let getRecipesfromIngreds = (req, res) => {
 }
 
 let getRecipes = (foodArr, res) => {
-    console.log(foodArr);
     let prefixUrl =
     "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=";
     let suffixUrl = "&limitLicense=false&number=5&ranking=2"
@@ -163,14 +160,11 @@ let postUserSignupInformation = (req, res) => {
 let postStaples = (req, res) => {
     readBody(req, (body) => {
         let stapleIngredients = JSON.parse(body);
-        console.log(stapleIngredients);
         let { authorization: token } = req.headers;
         let payload = jwt.verify(token, SIGNATURE);
         let userId = payload.userId;
-        // console.log(stapleIngredients);
         db.query(`SELECT * FROM ingredients WHERE userid = ` + userId)
             .then((contents) => {
-                // console.log(contents.length);
                 if (contents.length === 0) {
                     db.query(`INSERT INTO 
                         ingredients (userid, included)
@@ -219,7 +213,6 @@ let returnEmail = (req, res) => {
 
 let saveLikedRecipes = (req, res) => {
     readBody(req, body => {
-        console.log(req.jwt);
         let userId = req.jwt.userId;
         let recipeId = body;
         db.one(`
