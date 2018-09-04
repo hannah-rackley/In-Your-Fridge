@@ -208,8 +208,8 @@ html, body {
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    /* align-items: center;
-    padding: 0 10%; */
+    /* align-items: center; */
+    padding: 0 5%;
 }
 
 .staples-output, .extras-output {
@@ -283,7 +283,7 @@ html, body {
 }
 
 .staples-output {
-    position: relative;
+    /* position: relative; */
     text-align: center;
 }
 
@@ -337,6 +337,9 @@ html, body {
 
 .white {
     color: white;
+}
+.confirm-ingredients-button-container{
+    padding-bottom: 5%;
 }
 
 /* styling for tablets */
