@@ -338,6 +338,9 @@ html, body {
 .white {
     color: white;
 }
+.confirm-ingredients-button-container{
+    padding-bottom: 5%;
+}
 
 /* styling for tablets */
 @media (max-width: 420px) {
