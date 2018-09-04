@@ -98,41 +98,41 @@
             </div>
         </div>
     </div>
-    <div class="all-ingredients-container">
-        <!-- <h1 class="logo"> in your fridge </h1> -->
-        <div class="ingredient-container">            
-                <form class="staples-form">
+    <section class="main">
+        <img class="open-fridge" src='./fridge-open.jpg'/>
+        <div class="all-ingredients-container">
+            <!-- <h1 class="logo"> in your fridge </h1> -->
+            <div class="ingredient-container">            
+                    <form class="staples-form">
+                        <label>
+                            <div class="input-labels">
+                                <span>Enter an ingredient item you keep as a staple</span> <br>
+                                <input class="staples-input" placeholder="ex) bread"/>
+                                <button class="staples-submit btn btn-light btn-sm" type="submit">Submit item</button>
+                            </div>
+                        </label>
+                    </form>
+            </div>
+            <div class="ingredient-container">            
+                <form class="extras-form">
                     <label>
                         <div class="input-labels">
-                            <span>Enter an ingredient item you keep as a staple</span> <br>
-                            <input class="staples-input" placeholder="ex) bread"/>
-                            <button class="staples-submit btn btn-light btn-sm" type="submit">Submit item</button>
+                            <span>Enter an extra ingredient that you have on hand, that isn't a staple</span><br>
+                            <input class="extras-input" placeholder="ex) chicken"/>
+                            <button class="extras-submit btn btn-light btn-sm" type="submit">Submit item</button>
                         </div>
                     </label>
                 </form>
+            </div>  
+            <div class="staples-output">
+            </div>
+            <div class="extras-output">
+            </div>
+            <div>
+                <button class='confirm-ingredients btn btn-light' type='submit'>Confirm Ingredients!</button>
+            </div>
         </div>
-        <div class="ingredient-container">            
-            <form class="extras-form">
-                <label>
-                    <div class="input-labels">
-                        <span>Enter an extra ingredient that you have on hand, that isn't a staple</span><br>
-                        <input class="extras-input" placeholder="ex) chicken"/>
-                        <button class="extras-submit btn btn-light btn-sm" type="submit">Submit item</button>
-                    </div>
-                </label>
-            </form>
-        </div>  
-        <div class="staples-output">
-            <img class="open-fridge" src='./fridge-open.jpg'/>
-        </div>
-        <button class='edit-staples btn btn-light' value='staples'>Edit</button>
-        <div class="extras-output">
-        </div>
-        <button class='edit-extras btn btn-light' value='extras'>Edit</button>
-        <div>
-            <button class='confirm-ingredients btn btn-light' type='submit'>Confirm Ingredients!</button>
-        </div>
-    </div>
+    </section>
     <div class="recipes-container">
     </div>
     <script src="main.js"></script>

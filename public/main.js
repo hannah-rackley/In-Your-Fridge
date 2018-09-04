@@ -141,25 +141,25 @@ let captureUserCredentials = (prefix) => {
     return userCredentials;
 };
 
-let showDeleteButtons = (event) => {
-    event.preventDefault();
-    let deleteButtons;
-    if (event.target.value === 'extras') {
-        deleteButtons = document.querySelectorAll('.extras-delete-button');
-    } else if (event.target.value === 'staples') {
-        deleteButtons = document.querySelectorAll('.staples-delete-button');
-    }
-    deleteButtons.forEach((button) => {
-        button.classList.toggle('hidden');
-    });
-    if (event.target.textContent === 'Edit') {
-        event.target.textContent = 'Done!';
-    } else if (event.target.textContent === 'Done!') {
-        event.target.textContent = 'Edit';
-    }
-}
+// let showDeleteButtons = (event) => {
+//     event.preventDefault();
+//     let deleteButtons;
+//     if (event.target.value === 'extras') {
+//         deleteButtons = document.querySelectorAll('.extras-delete-button');
+//     } else if (event.target.value === 'staples') {
+//         deleteButtons = document.querySelectorAll('.staples-delete-button');
+//     }
+//     deleteButtons.forEach((button) => {
+//         button.classList.toggle('hidden');
+//     });
+//     if (event.target.textContent === 'Edit') {
+//         event.target.textContent = 'Done!';
+//     } else if (event.target.textContent === 'Done!') {
+//         event.target.textContent = 'Edit';
+//     }
+// }
 
-let deleteStaple = (event) => {
+let deleteIngredient = (event) => {
     var deleteButton = event.target;
     var parent = deleteButton.parentElement;
     parent.parentNode.removeChild(parent);
@@ -170,10 +170,9 @@ let displayIngredient = function(prefix, input) {
     let item = document.createElement('div');
     let deleteButton = document.createElement('input');
     deleteButton.setAttribute('type', 'submit');
-    deleteButton.setAttribute('value', 'Remove');
+    deleteButton.setAttribute('value', 'x');
     deleteButton.classList.add(prefix +'-delete-button');
-    deleteButton.classList.add('hidden');
-    deleteButton.addEventListener('click', deleteStaple);
+    deleteButton.addEventListener('click', deleteIngredient);
     item.textContent = input;
     item.appendChild(deleteButton);
     item.classList.add(prefix + '-item-output');
@@ -408,17 +407,11 @@ let setupEventListeners = () => {
     let staplesBtn = document.querySelector(".staples-submit");
     staplesBtn.addEventListener("click", getStapleInput);
 
-    let editStaples = document.querySelector('.edit-staples');
-    editStaples.addEventListener('click', showDeleteButtons);
-
     let confirmIngredients = document.querySelector('.confirm-ingredients');
     confirmIngredients.addEventListener('click', getConfirmedIngredients)
 
     let extrasBtn = document.querySelector(".extras-submit");
     extrasBtn.addEventListener("click", getExtraInput);
-
-    let editExtras = document.querySelector('.edit-extras');
-    editExtras.addEventListener('click', showDeleteButtons);
 
     let logoutButton = document.querySelector('.logout-button');
     logoutButton.addEventListener('click', loginLogout); 
