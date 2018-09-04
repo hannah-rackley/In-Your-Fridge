@@ -61,6 +61,7 @@ let loginButtonStatus = () => {
     let logoutButton = document.querySelector('.logout-button');
     let fridgeImage = document.querySelector('.fridge');
     if (checkToken === null) {
+        fridgeImage.setAttribute('src', './fridge-closed.jpg');
         logoutButton.textContent = 'Log In';
         document.querySelector('.view-saved')
           .classList.add('hidden');
@@ -150,7 +151,7 @@ let deleteIngredient = (event) => {
 let displayIngredient = function(prefix, input) {
     let output = document.querySelector('.' + prefix + '-output');
     let item = document.createElement('div');
-    let text = document.createElement('p');
+    let text = document.createElement('div');
     let deleteButton = document.createElement('button');
     deleteButton.setAttribute('type', 'submit');
     deleteButton.textContent = 'x';
