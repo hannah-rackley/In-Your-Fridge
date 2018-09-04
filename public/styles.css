@@ -283,7 +283,7 @@ html, body {
 }
 
 .staples-output {
-    position: relative;
+    /* position: relative; */
     text-align: center;
 }
 
