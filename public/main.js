@@ -5,11 +5,19 @@ let closeLogin = () => {
     loginModalWindow.classList.add('hidden');
 }
 
+let clearDisplayContainers = (container) => {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+};
+
 let displayUserEmail = () => {
     let localStorageToken = localStorage.getItem("token");
     let parseToken = JSON.parse(localStorageToken);
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
-    let userEmail = document.querySelector('.navigation-user-email')
+    clearDisplayContainers(userEmailContainer);
+    let userEmail = document.createElement('p');
+    userEmail.classList.add('navigation-user-email')
     let fetchGet = fetch('/retrieveemail', {
         method: 'GET',
         headers: {'authorization': parseToken}
@@ -76,18 +84,12 @@ let loginButtonStatus = () => {
 
 loginButtonStatus();
 
-let clearDisplayContainers = (container) => {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-};
-
 let loginLogout = () => {
     let loginModalWindow = document.querySelector('.login-modal-container');
     let logoutButton = document.querySelector('.logout-button');
     let staplesOutput = document.querySelector('.staples-output');
     let userEmailContainer = document.querySelector('.navigation-user-email-container');
-    let userEmail = document.querySelector('.navigation-user-email')
+    let userEmail = document.querySelector('.navigation-user-email');
     let extrasOutput = document.querySelector('.extras-output');
     let recipes = document.querySelector('.recipes-container');
     if (logoutButton.textContent === 'Log Out') {
@@ -111,7 +113,7 @@ let loginAfterSignup = (credentials) => {
         return results.text()})
         .then(text => {
             localStorage.setItem("token", JSON.stringify(text))
-            displayUserEmail(credentials.email);
+            displayUserEmail();
             loginButtonStatus();
         });
 };
@@ -345,7 +347,7 @@ let submitLoginInfo = (event) => {
             } else {
                 localStorage.setItem("token", JSON.stringify(text))
                 getStaples();
-                displayUserEmail(credentials.email);
+                displayUserEmail();
                 document.querySelector('.view-saved')
                 .classList.remove('hidden');
                 loginButtonStatus();
