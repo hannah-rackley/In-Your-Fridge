@@ -63,7 +63,6 @@ html, body {
     margin: 0 15%;
     box-shadow: 10px 10px 5px grey;
     border-radius: 8px;
-
 }
 .close-login-modal-button {
     align-self: flex-end;
@@ -254,6 +253,7 @@ html, body {
 .open-fridge {
     height: 460px;
     width: auto;
+    display: none;
 }
 
 .staples-output {
