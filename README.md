@@ -4,7 +4,7 @@ In Your Fridge is a web application that allows users to search for recipes base
 
 [Live Demo!](http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/)
 
-[Workflow](https://trello.com/b/mWgkC5Kg/in-your-fridge)
+[Trello](https://trello.com/b/mWgkC5Kg/in-your-fridge)
 
 ![inyourfridge-in-action](https://github.com/hglasser/In-Your-Fridge/blob/master/inyourfridge-in-action.gif)
 
@@ -60,4 +60,12 @@ The main, and rather necessary, perk of using this library was that a user would
 A library that allowed us to transition Fetch API functionality of fetching of resources (built-in to later versions of JavaScript) to Node.js.
 
 In particular, we used this for our requests/responses to the external API used in this application, Spoonacular.
- 
+
+## Database
+-----------
+
+### PostgreSQL
+--------------
+We had three main usable tables stored in our backend database. There was a table for users, recipes, and ingredients. We queried the database using PostgreSQL. Each user was provided with a unique user ID upon the creation of their account. The user ID could then be linked to the ingredient and recipe tables so that the information associated with a specific user ID would be easy to select, update, or remove. 
+
+All of the queries we made to our database returned a promise. As discussed in our 'Issues We Faced' section, these queries provided an opportunity to gain familiarity with promise chaining - and the risks that come along with trying to return and access data in that is being returned asynchronously. 
