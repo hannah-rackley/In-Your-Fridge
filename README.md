@@ -7,6 +7,9 @@ http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/
 Workflow:
 https://trello.com/b/mWgkC5Kg/in-your-fridge
 
+
+![](./inyourfridge-in-action.gif =400x600)
+
 ## Authors
 --------------
 * Brandon Humphries
@@ -24,19 +27,24 @@ They want to quickly find recipes that utilize the ingredients they already have
 
 ## Our Solution
 -------------------
-In Your Fridge allows users to input the staple ingredients they always have around the house - these ingredients will be stored in our database so they never have input those again. The user may also input 'Extras', and both of these lists will be used to generate a list of five recipes - ordered by time and title. If the user comes across a recipe they want to save for later, they can easily favorite that recipe and it will be stored for them.
+In Your Fridge allows users to input the staple ingredients they always have around the house - these ingredients will be stored in our database so they never have to input those again. The user may also input 'Extras', and both of these lists will be used to generate a list of five recipes - ordered by time and title. If the user comes across a recipe they want to save for later, they can easily favorite that recipe and it will be stored for them.
 
 ### 
 -----------------
 
 ### Issues We Faced
 -------------------
+Retrieving usable data from promise chaining: Understanding the concept of a nested ".then" resulting in a promise, including within the innermost nest, the method of extracting that data. In this, we gained more insight into how promise chaining results nusable datable, which is unlike  the convention of waiting until the end of most functions to have that data resolve to something usable.
+
+Switching from front-end external API fetch requests to back-end (specifically to keep API keys secure). The concept that all dialogue with databases to front-end is done through the back-end, as mediator. This concept became more clear as we worked to develop this application, and saw the necessity of the external API call to be moved to the back-end. 
 
 ## Styling
 ----------
+With the application name of "in your fridge," we selected a fridge image first and then chose our color theme of toned-down blue, greys, and purple, around it. Rounded edges on our modals, and a minimalistic look kept our application looking contemporary. A notepad with staples listed provided a familiar presentation.
 
 ### Bootstrap
 ------------
+Bootstrap, a HTML, CSS and JavaScript library, a robust styling tool, gave more power in achieving the aesthetic we desired in our application.
 
 ### Issues We Faced
 -------------------
@@ -46,12 +54,20 @@ In Your Fridge allows users to input the staple ingredients they always have aro
 ------------
 
 
+### Express
+--------------
+This provided our back-end (Node.Js) a concise and easy to use method of establishing routes for our post and get requests.
+
+It also gave us the ability to load our static pages: style sheets, html, and JavaScript, with less code.
+
 ### jwt
 --------------
 
 
 ### fetch-node
 ------------
+A library that allowed us to transition Fetch API functionality of fetching of resources (built-in to later versions of JavaScript) to Node.js.
 
+In particular, we used this for our requests/responses to the external API used in this application, Spoonacular.
 ![](photo.png)
  
