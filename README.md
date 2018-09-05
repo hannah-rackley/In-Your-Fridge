@@ -2,10 +2,9 @@
 -------------------
 In Your Fridge is a web application that allows users to search for recipes based upon a limited list of ingredients. The backend allows for storage of user credentials, saved ingredients, and favorite recipes.
 
-http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/
+[Live Demo!](http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/)
 
-Workflow:
-https://trello.com/b/mWgkC5Kg/in-your-fridge
+[Trello](https://trello.com/b/mWgkC5Kg/in-your-fridge)
 
 ![inyourfridge-in-action](https://github.com/hglasser/In-Your-Fridge/blob/master/inyourfridge-in-action.gif)
 
@@ -23,13 +22,9 @@ Home chefs that are restricted greatly by the amount of time and variety of ingr
 -------------------
 They want to quickly find recipes that utilize the ingredients they already have at home. They may also want search for recipes that are quick to complete.
 
-
 ## Our Solution
 -------------------
 In Your Fridge allows users to input the staple ingredients they always have around the house - these ingredients will be stored in our database so they never have to input those again. The user may also input 'Extras', and both of these lists will be used to generate a list of five recipes - ordered by time and title. If the user comes across a recipe they want to save for later, they can easily favorite that recipe and it will be stored for them.
-
-### 
------------------
 
 ### Issues We Faced
 -------------------
@@ -45,13 +40,8 @@ With the application name of "in your fridge," we selected a fridge image first 
 ------------
 Bootstrap, a HTML, CSS and JavaScript library, a robust styling tool, gave more power in achieving the aesthetic we desired in our application.
 
-### Issues We Faced
--------------------
-
-
 ## Libraries
 ------------
-
 
 ### Express
 --------------
@@ -61,12 +51,21 @@ It also gave us the ability to load our static pages: style sheets, html, and Ja
 
 ### jwt
 --------------
+We utilized JSON Web Tokens throughout the entirety of our application. A user would be assigned a token upon verification of their email and password after they logged in or signed up. That token would then be stored in their local storage and would remain there for as long as they remained on the page. Logging out cleared that token from local storage. The library allowed for easy verification of the tokens - and in this case we allowed all of our tokens to remain valid for a period of 7 days. 
 
+The ultimate perk of using this library was that a user would not have to provide their login information every time they wanted to make a request on our page. We did all of the verification on the backend after passing along the user's token stored on the frontend.
 
 ### fetch-node
 ------------
 A library that allowed us to transition Fetch API functionality of fetching of resources (built-in to later versions of JavaScript) to Node.js.
 
 In particular, we used this for our requests/responses to the external API used in this application, Spoonacular.
-![](photo.png)
- 
+
+## Database
+-----------
+
+### PostgreSQL
+--------------
+We had three main tables stored in our backend database. There was a table for users, recipes, and ingredients. We queried the database using PostgreSQL. Each user was provided with a unique user ID upon the creation of their account. The user ID could then be linked to the ingredient and recipe tables so that the information associated with a specific user ID would be easy to select, update, or remove. 
+
+All of the queries we made to our database returned a promise. As discussed in our 'Issues We Faced' section, these queries provided an opportunity to gain familiarity with promise chaining - and the risks that come along with trying to access data that is being returned asynchronously. 
