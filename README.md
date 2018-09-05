@@ -51,9 +51,9 @@ It also gave us the ability to load our static pages: style sheets, html, and Ja
 
 ### jwt
 --------------
-We utilized JSON Web Tokens throughout the entirety of our applicaiton. A user would be assigned a token upon verification of their email and password after they logged in or after they created a user profile while signing up. That token would then be stored in their local storage and would remain in their local storage for as long as they remained on the page and did not log out. The library verified those tokens for us - and in this case we allowed all of our tokens to remain valid for a period of 7 days. 
+We utilized JSON Web Tokens throughout the entirety of our application. A user would be assigned a token upon verification of their email and password after they logged in or signed up. That token would then be stored in their local storage and would remain there for as long as they remained on the page. Logging out clears that token from local storage. The library allowed for easy verification of the tokens - and in this case we allowed all of our tokens to remain valid for a period of 7 days. 
 
-The main, and rather necessary, perk of using this library was that a user would not have to provide their login information every time they wanted to make a request on our page - we did this all on the backend after passing along that token that had originally been stored on the frontend.
+The ultimate perk of using this library was that a user would not have to provide their login information every time they wanted to make a request on our page. We did all of the verification on the backend after passing along the user's token stored on the frontend.
 
 ### fetch-node
 ------------
