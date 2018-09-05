@@ -8,7 +8,7 @@ Workflow:
 https://trello.com/b/mWgkC5Kg/in-your-fridge
 
 
-![](./inyourfridge-in-action.gif =400x600)
+![](inyourfridge-in-action.gif=400x600)
 
 ## Authors
 --------------
