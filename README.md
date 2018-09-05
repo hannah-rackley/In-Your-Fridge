@@ -7,8 +7,7 @@ http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/
 Workflow:
 https://trello.com/b/mWgkC5Kg/in-your-fridge
 
-
-![](./inyourfridge-in-action.gif =400x600)
+![inyourfridge-in-action](https://github.com/hglasser/In-Your-Fridge/blob/master/inyourfridge-in-action.gif)
 
 ## Authors
 --------------
