@@ -341,6 +341,22 @@ html, body {
 .confirm-ingredients-button-container{
     padding-bottom: 5%;
 }
+.substitute-ingredient-container {
+    padding: 0 5%;
+}
+.ingredient-substitutions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 1em;
+    padding-left: 1em;
+    text-align: center;
+}
+.ingredient-substitution {
+    border-bottom: 1px solid lightblue;
+    text-align: start;
+}
 
 /* styling for tablets */
 @media (max-width: 420px) {

@@ -293,6 +293,33 @@ let getConfirmedIngredients = (event) => {
     return allIngredients;
 }
 
+let displayIngredientSubstitutions = (substitutions) => {
+    substitutions.forEach((substitute) => {
+        let ingredientSubstitutionContainer = document.querySelector('.ingredient-substitutions')
+        let ingredientSubstitution = document.createElement('p');
+        ingredientSubstitution.classList.add('ingredient-substitution');
+        ingredientSubstitution.textContent = substitute;
+        ingredientSubstitutionContainer.appendChild(ingredientSubstitution);
+    })
+};
+
+let getSubstituteIngredients = (event) => {
+    event.preventDefault();
+    let localStorageToken = localStorage.getItem("token");
+    let parseToken = JSON.parse(localStorageToken);
+    let ingredient = document.querySelector('.substitute-ingredient-input');
+    let fetchPost = fetch('/substitutes', {
+        method: 'POST',
+        body: JSON.stringify(ingredient.value),
+        headers: {'Content-Type': 'application/json', 
+        'authorization': parseToken}
+    }).then((contents) => {
+        return contents.json();
+    }).then((results) => {
+        displayIngredientSubstitutions(results.substitutes);    
+    })
+};
+
 let showSignupContainer = () => {
     let signupContainer = document.querySelector('.signup-modal-container');
     let loginContainer = document.querySelector('.login-input-container');
@@ -396,6 +423,9 @@ let setupEventListeners = () => {
     
     let showRecipesInNav = document.querySelector('.view-saved');
     showRecipesInNav.addEventListener('click', () => showLikedRecipes());
+
+    let ingredientToSubstitute = document.querySelector('.substitute-ingredient');
+    ingredientToSubstitute.addEventListener('submit', getSubstituteIngredients);
 }
 
 setupEventListeners();
