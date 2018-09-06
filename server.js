@@ -144,6 +144,28 @@ let getRecipes = (foodArr, res) => {
     });
 };
 
+let getIngredientSubstitution = (req, res) => {
+    let prefixUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/substitutes?ingredientName=";
+    readBody(req, (body) => {
+        let ingredient = JSON.parse(body);
+        fetch(prefixUrl + ingredient, {
+            method: 'GET',
+            headers: {
+                "X-Mashape-Key": recipeKey,
+                "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+            }
+        })
+            .then((substitutes) => {
+                let promiseSubstitutes = substitutes.json();
+                return promiseSubstitutes;
+            })
+        .then((ingredients) => {
+            res.end(JSON.stringify(ingredients));
+        })
+        .catch((err) => {console.log(err)});
+    })
+};
+
 let postUserSignupInformation = (req, res) => {
     readBody(req, (body) => {
         let userInformation = JSON.parse(body);
@@ -247,5 +269,6 @@ server.post('/users', postUserSignupInformation);
 server.post('/staples', checkToken, postStaples);
 server.post('/like', checkToken, saveLikedRecipes);
 server.post('/ingredients', checkToken, getRecipesfromIngreds);
+server.post('/substitutes', checkToken, getIngredientSubstitution);
 // server.get('/tokens')
 server.listen(3000);
