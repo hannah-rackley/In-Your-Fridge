@@ -92,12 +92,16 @@ let loginLogout = () => {
     let userEmail = document.querySelector('.navigation-user-email');
     let extrasOutput = document.querySelector('.extras-output');
     let recipes = document.querySelector('.recipes-container');
+    let substitutions = document.querySelector('.ingredient-substitutions');
+    let substitutionsInput = document.querySelector('.substitute-ingredient-input');
     if (logoutButton.textContent === 'Log Out') {
         userEmailContainer.removeChild(userEmail);
         localStorage.removeItem("token");
         clearDisplayContainers(staplesOutput);
         clearDisplayContainers(extrasOutput);
         clearDisplayContainers(recipes);
+        clearDisplayContainers(substitutions);
+        substitutionsInput.value = '';
         loginButtonStatus();
     } else if (logoutButton.textContent === 'Log In') {
         loginModalWindow.classList.remove('hidden');
