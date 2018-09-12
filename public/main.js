@@ -307,6 +307,14 @@ let displayIngredientSubstitutions = (substitutions) => {
     })
 };
 
+let displayNoIngredientSubstitutions = () => {
+    let ingredientSubstitutionContainer = document.querySelector('.ingredient-substitutions');
+    let noSubstitutionsMessageContainer = document.createElement('p');
+    let noSubstitutionsMessage = 'Could not find any substitutions for that ingredient.'
+    noSubstitutionsMessageContainer.textContent = noSubstitutionsMessage;
+    ingredientSubstitutionContainer.appendChild(noSubstitutionsMessageContainer);
+}
+
 let getSubstituteIngredients = (event) => {
     event.preventDefault();
     let localStorageToken = localStorage.getItem("token");
@@ -320,7 +328,11 @@ let getSubstituteIngredients = (event) => {
     }).then((contents) => {
         return contents.json();
     }).then((results) => {
-        displayIngredientSubstitutions(results.substitutes);    
+        if (results.status === 'failure') {
+            displayNoIngredientSubstitutions();
+        } else {
+            displayIngredientSubstitutions(results.substitutes);    
+        }
     })
 };
 
