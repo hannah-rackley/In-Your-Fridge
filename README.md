@@ -2,7 +2,7 @@
 -------------------
 In Your Fridge is a web application that allows users to search for recipes based upon a limited list of ingredients. The backend allows for storage of user credentials, saved ingredients, and favorite recipes.
 
-[Live Demo!](http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/)
+[Live Demo!](http://inyourfridge.co/)
 
 [Trello](https://trello.com/b/mWgkC5Kg/in-your-fridge)
 
@@ -28,7 +28,7 @@ In Your Fridge allows users to input the staple ingredients they always have aro
 
 ### Issues We Faced
 -------------------
-Retrieving usable data from promise chaining: Understanding the concept of a nested ".then" resulting in a promise, including within the innermost nest, the method of extracting that data. In this, we gained more insight into how promise chaining results nusable datable, which is unlike  the convention of waiting until the end of most functions to have that data resolve to something usable.
+Retrieving usable data from promise chaining: Understanding the concept of a nested ".then" resulting in a promise, including within the innermost nest, the method of extracting that data. In this, we gained more insight into how promise chaining results in usable datable, which is unlike  the convention of waiting until the end of most functions to have that data resolve to something usable.
 
 Switching from front-end external API fetch requests to back-end (specifically to keep API keys secure). The concept that all dialogue with databases to front-end is done through the back-end, as mediator. This concept became more clear as we worked to develop this application, and saw the necessity of the external API call to be moved to the back-end. 
 
