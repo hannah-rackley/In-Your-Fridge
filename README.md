@@ -2,7 +2,7 @@
 -------------------
 In Your Fridge is a web application that allows users to search for recipes based upon a limited list of ingredients. The backend allows for storage of user credentials, saved ingredients, and favorite recipes.
 
-[Live Demo!](http://ec2-18-222-193-161.us-east-2.compute.amazonaws.com/)
+[Live Demo!](http://inyourfridge.co/)
 
 [Trello](https://trello.com/b/mWgkC5Kg/in-your-fridge)
 
