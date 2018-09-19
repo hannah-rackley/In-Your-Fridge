@@ -28,7 +28,7 @@ In Your Fridge allows users to input the staple ingredients they always have aro
 
 ### Issues We Faced
 -------------------
-Retrieving usable data from promise chaining: Understanding the concept of a nested ".then" resulting in a promise, including within the innermost nest, the method of extracting that data. In this, we gained more insight into how promise chaining results nusable datable, which is unlike  the convention of waiting until the end of most functions to have that data resolve to something usable.
+Retrieving usable data from promise chaining: Understanding the concept of a nested ".then" resulting in a promise, including within the innermost nest, the method of extracting that data. In this, we gained more insight into how promise chaining results in usable datable, which is unlike  the convention of waiting until the end of most functions to have that data resolve to something usable.
 
 Switching from front-end external API fetch requests to back-end (specifically to keep API keys secure). The concept that all dialogue with databases to front-end is done through the back-end, as mediator. This concept became more clear as we worked to develop this application, and saw the necessity of the external API call to be moved to the back-end. 
 
